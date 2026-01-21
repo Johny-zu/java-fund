@@ -6,3 +6,9 @@ En este se ven como iniciar con el codigo y las variables primitivas con if, par
 
 ## Bucles
 Aqui vemos ciclos que nos ayudaran con repeticiones de operaciones en base a un requisito
+
+## Metodos
+Revision de utilización y funcion de los metodos
+
+## Arreglos 
+En estos se veran arrays, metodos y bucles para reforzamiento
