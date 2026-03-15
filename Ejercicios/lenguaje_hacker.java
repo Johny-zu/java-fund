@@ -72,6 +72,9 @@ public class lenguaje_hacker {
                 case 'z':
                     letras[i] = '¿';
                 break;
+                case ' ':
+                    letras[i] = ';';
+                break;
                 default: System.out.println(".");
                     break;
             }
@@ -80,7 +83,7 @@ public class lenguaje_hacker {
         return new String(letras);
     }
     public static void main(String[] args) {
-        String palabra = "asustado";
+        String palabra = "";
         System.out.println(traductor(palabra));
     }
 }
