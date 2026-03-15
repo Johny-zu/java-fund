@@ -19,11 +19,11 @@ public class Fizbus {
         for(int i = 0; i < 100; i++){
             String f = "fizz", b = "buzz";
             if (esMultiplosTres(num+i) == true && esMultiplosCinco(num+i) == true) {
-                System.out.println((num+i) + f + b);
+                System.out.println(f + b);
             } else if (esMultiplosTres(num+i) == true) {                
-                System.out.println((num + i) + f);
+                System.out.println(f);
             } else if (esMultiplosCinco(num+i) == true) {
-                System.out.println((num + i) + b);
+                System.out.println(b);
             } else {
                 System.out.println(num + i);
             }
