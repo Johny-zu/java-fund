@@ -60,10 +60,6 @@ public class Estudiante {
         return calcularPromedio() >= 7.0;
     }
 
-    public boolean estaVacio() {
-        return nombre == null || matricula == null;
-    }
-
     @Override
     public String toString() {
 

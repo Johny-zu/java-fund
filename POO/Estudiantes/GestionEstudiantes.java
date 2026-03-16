@@ -2,6 +2,14 @@ package POO.Estudiantes;
 import java.util.Scanner;
 
 public class GestionEstudiantes {
+    public static boolean grupoEstaVacio(Estudiante[] grupo){
+    for(int i = 0; i < grupo.length; i++){
+        if(grupo[i] != null){
+            return false;
+        }
+    }
+    return true;
+}
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
@@ -14,9 +22,8 @@ public class GestionEstudiantes {
                     + "\n7.- Salir";
         String nombre, carrera, matricula;
         int numEstudiantes, opcion;
-        boolean grupoVacio = true;
 
-        System.out.println("Ingresa la cantidad de estudiantes de los grupos: ");
+        System.out.printf("Ingresa la cantidad de estudiantes de los grupos: ");
         numEstudiantes = sc.nextInt();
 
         Estudiante [] grupo = new Estudiante[numEstudiantes];
@@ -38,38 +45,31 @@ public class GestionEstudiantes {
                 } else{
                     for(int i = 0; i < grupo.length; i++){
                         if (grupo[i] == null) {
-                            System.out.println("Ingrese el nombre del estudiante: ");
+                            System.out.printf("Ingrese el nombre del estudiante: ");
                             sc.nextLine(); // limpiar buffer si antes hubo nextInt
                             nombre = sc.nextLine();
-                            System.out.println("Ingrese la carrera del estudiante: ");
+                            System.out.printf("Ingrese la carrera del estudiante: ");
                             carrera = sc.nextLine();
-                            System.out.println("Ingrese la matrícula del estudiante: ");
+                            System.out.printf("Ingrese la matrícula del estudiante: ");
                             matricula = sc.nextLine();
                             
                             double[] calificaciones = new double[3];
                             for(int j = 0; j < calificaciones.length; j++){
-                                System.out.println("ingresa la calificacion " + (j + 1) + ": ");
+                                System.out.printf("ingresa la calificacion " + (j + 1) + ": ");
                                 calificaciones[j] = sc.nextDouble();
                             }
-                            grupo[i] = new Estudiante(nombre, carrera, matricula, calificaciones);
+                            grupo[i] = new Estudiante(matricula, nombre, carrera, calificaciones);
                             break;
                         }
                     }
                 }
                     break;
-                case 2: grupoVacio = true;
-                for(int i =0; i < grupo.length; i++){
-                    if(grupo[i] != null){
-                        grupoVacio = false;
-                        break;
-                    }
-                }
-                if (grupoVacio) {
+                case 2: if(grupoEstaVacio(grupo)){
                     System.out.println("El grupo esta vacio");
                 } else{
                     String matriculaProv;
                     boolean encontrado = false;
-                    System.out.println("Ingresa matricula a buscar: ");
+                    System.out.printf("Ingresa matricula a buscar: ");
                     sc.nextLine();
                     matriculaProv = sc.nextLine();
                     for(int i=0; i < grupo.length; i++){
@@ -85,35 +85,65 @@ public class GestionEstudiantes {
                 }
                 break;
                 case 3 :  
-                grupoVacio = true;
-                for(int i = 0; i < grupo.length ; i++){
-                    if (grupo[i] != null && !grupo[i].estaVacio()) {
-                        System.out.println(grupo[i].toString());
-                        grupoVacio = false;
-                    } 
-                }
-                if (grupoVacio) {
+                if(grupoEstaVacio(grupo)){
                     System.out.println("El grupo aun no tiene estudiantes");
                 }
-                    break;
-                case 4: grupoVacio = true;
-                for(int i =0; i < grupo.length; i++){
-                    if(grupo[i] != null){
-                        grupoVacio = false;
-                        break;
-                    }
-                }
-                if (grupoVacio) {
-                    System.out.println("El grupo esta vacio");
-                } else{
-                    boolean revision = false;
-                    for(int i = 0; i < grupo.length; i++){
-                        if(grupo[i] != null && grupo[i].tienePromedioAprobatorio() == true){
-                            System.out.println(grupo[i].getNombre());
+                else{
+                    for(int i = 0; i < grupo.length ; i++){
+                        if(grupo[i] != null){
+                            System.out.println(grupo[i].toString());
                         }
                     }
                 }
                     break;
+                case 4: 
+                if(grupoEstaVacio(grupo)){
+                    System.out.println("El grupo esta vacio");
+                }
+                else{
+                    boolean hayAprobados = false;
+                    for(int i = 0; i < grupo.length; i++){
+                        if(grupo[i] != null && grupo[i].tienePromedioAprobatorio()){
+                            System.out.println(grupo[i].getNombre());
+                            hayAprobados = true;
+                        }
+                    }
+                    if(!hayAprobados)
+                        System.out.println("Ningun Estudiante aprobo");
+                }
+                break;
+                case 5: 
+                if(grupoEstaVacio(grupo)){
+                    System.out.println("El grupo esta vacio");
+                }
+                else{
+                    boolean hayReprobados = false;
+                    for(int i = 0; i < grupo.length; i++){
+                        if(grupo[i] != null && !grupo[i].tienePromedioAprobatorio()){
+                            System.out.println(grupo[i].getNombre());
+                            hayReprobados = true;
+                        }
+                    }
+                    if (!hayReprobados) {
+                        System.out.println("Ningun estudiante reprobo");
+                    }
+                }
+                    break;
+                case 6:
+                if(grupoEstaVacio(grupo)){
+                    System.out.println("El grupo esta vacio");
+                }
+                else{
+                    for(int i = 0; i < grupo.length; i++){
+                        if(grupo[i] != null){
+                            System.out.println(
+                                grupo[i].getNombre() + " promedio: " +
+                                grupo[i].calcularPromedio()
+                            );
+                        }
+                    }
+                }
+                break;
                 case 7 : System.out.println("Saliendo...");  
                     break;
                 default: System.out.println("Opcion no encontrada");
