@@ -151,5 +151,6 @@ public class GestionEstudiantes {
             }
 
         }while(opcion != 7);
+        sc.close();
     }
 }

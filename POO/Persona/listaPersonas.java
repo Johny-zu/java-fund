@@ -44,5 +44,6 @@ public class listaPersonas {
                     break;
             }
         } while (op != '4');
+        sc.close();
     }
 }

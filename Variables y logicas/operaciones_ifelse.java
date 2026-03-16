@@ -30,5 +30,6 @@ public class operaciones_ifelse{
         else
             System.out.print("Ingresa un operacion posible");
         
+        sc.close();
     }
 }

@@ -57,5 +57,6 @@ public class GestionBiblioteca {
                 break;
             }
         } while (op != 6);
+        sc.close();
     }
 }

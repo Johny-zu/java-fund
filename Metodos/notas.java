@@ -1,6 +1,4 @@
 package Metodos;
-import java.util.Scanner;
-
 public class notas{
     public static String ingresar_calificacion(int calificacion){
         if (calificacion >= 70) {
