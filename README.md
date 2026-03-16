@@ -12,3 +12,9 @@ Revision de utilización y funcion de los metodos
 
 ## Arreglos 
 En estos se veran arrays, metodos y bucles para reforzamiento
+
+## Ejercicios
+En esta carpeta seran ejercicios usando todo lo que se ha aprendido para ir aumentando el campo, se toman ejemplos pensados y otros de internet para practicar
+
+## POO
+En esta nos aventuraremos a Programación orientada a objetos
