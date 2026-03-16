@@ -2,31 +2,6 @@ package Ejercicios.Videojuegos;
 import java.util.Scanner;
 
 public class GestionVid {
-    public static boolean coleccionVacia(Juego[] coleccionJuego){
-        for(Juego juego : coleccionJuego) { 
-            if(juego != null) return false;
-        }
-        return true;
-    }
-
-    public static boolean coleccionLlena(Juego[] coleccionJuego){
-        for(Juego juego : coleccionJuego) {
-            if(juego == null) return false;
-        }
-        return true;
-    }
-
-    public static boolean enColeccion(Juego[] coleccionJuegos, String buscarTitulo){
-        for(int i = 0; i < coleccionJuegos.length; i++){
-            if(coleccionJuegos[i] != null && coleccionJuegos[i].getTitulo().equalsIgnoreCase(buscarTitulo)){
-                System.out.println("El titulo: " + buscarTitulo + " existe");
-                return true;
-            }
-        }
-        System.out.println("El titulo: " + buscarTitulo + " no existe");
-        return false;
-    }
-
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
@@ -34,22 +9,27 @@ public class GestionVid {
                     "\n2.- Marcar juego como completado (buscar por título)" + 
                     "\n3.- Mostrar todos los juegos" + 
                     "\n4.- Mostrar solo juegos completados" + 
-                    "\n5.- Mostrar solo juegos pendientes" + 
-                    "\n6.- Salir";
+                    "\n5.- Mostrar solo juegos pendientes" +
+                    "\n6.- Total de juegos en coleccion" + 
+                    "\n7.- Promedio de horas jugadas" + 
+                    "\n8.- Juego con mas horas" + 
+                    "\n9.- Juego con menos horas" +
+                    "\n10.- Porcentaje de juegos completado" +
+                    "\n11.- Salir";
         String titulo;
-        int horasJugadas, opcion, tamañoscoleccion;
+        int horasJugadas, opcion, tamañoColeccion;
         boolean completado = false;
         
         System.out.printf("Ingrese el tamaño de la coleccion: ");
-        tamañoscoleccion = sc.nextInt();
+        tamañoColeccion = sc.nextInt();
 
-        Juego[] coleccionJuego = new Juego[tamañoscoleccion];
+        Juego[] coleccionJuego = new Juego[tamañoColeccion];
         do{
             System.out.printf(menu + "\nIngrese una opcion del menu: ");
             opcion = sc.nextInt();
             switch (opcion) {
                 case 1:
-                    if (coleccionLlena(coleccionJuego)) {
+                    if (FuncionesVid.coleccionLlena(coleccionJuego)) {
                         System.out.println("La coleccion ya esta llena");
                     } else {
                         for(int i = 0; i < coleccionJuego.length; i++){
@@ -79,13 +59,13 @@ public class GestionVid {
                         }
                     }
                     break;
-                case 2: if (coleccionVacia(coleccionJuego)) {
+                case 2: if (FuncionesVid.coleccionVacia(coleccionJuego)) {
                     System.out.println("No hay juegos para buscar");
                 } else{
                     System.out.printf("Ingresa el juego terminado: ");
                     sc.nextLine();
                     titulo = sc.nextLine();
-                    if(enColeccion(coleccionJuego, titulo)) {  
+                    if(FuncionesVid.enColeccion(coleccionJuego, titulo)) {  
                         for(int i = 0; i < coleccionJuego.length; i++){
                             if(coleccionJuego[i] != null && coleccionJuego[i].getTitulo().equalsIgnoreCase(titulo)){
                                 if(!coleccionJuego[i].getCompletado()) {  // Valida que no esté completado
@@ -100,7 +80,7 @@ public class GestionVid {
                     }
                 }
                     break;
-                case 3: if (coleccionVacia(coleccionJuego)) {
+                case 3: if (FuncionesVid.coleccionVacia(coleccionJuego)) {
                     System.out.println("No hay juegos para mostrar");
                 } else{
                     for(int i = 0; i < coleccionJuego.length; i++){
@@ -109,7 +89,7 @@ public class GestionVid {
                     }
                 }
                     break;
-                case 4 : if(coleccionVacia(coleccionJuego)){
+                case 4 : if(FuncionesVid.coleccionVacia(coleccionJuego)){
                     System.out.println("no hay juegos para mostrar");
                 } else {
                     boolean hayCompletados = false;
@@ -125,7 +105,7 @@ public class GestionVid {
                         System.out.println("No hay juegos completados");
                 }
                     break; 
-                case 5 : if(coleccionVacia(coleccionJuego)){
+                case 5 : if(FuncionesVid.coleccionVacia(coleccionJuego)){
                     System.out.println("no hay juegos para mostrar");
                 } else {
                     boolean hayCompletados = false;
@@ -141,12 +121,42 @@ public class GestionVid {
                         System.out.println("No hay juegos sin completar");
                 }
                     break; 
-                case 6 : System.out.println("Saliendo...");
+                case 6: 
+                if (FuncionesVid.coleccionVacia(coleccionJuego)){
+                    System.out.println("No hay juegos para mostrar");
+                } else{
+                    int contador = 0;
+                    for(int i = 0; i < coleccionJuego.length; i++){
+                        if(coleccionJuego[i] != null){
+                            contador++;
+                        }
+                    }
+                    System.out.println(contador + " de: " + tamañoColeccion);
+                }
+                    break;
+                case 7: //Promedio de horas jugadas
+                if (FuncionesVid.coleccionVacia(coleccionJuego)) {
+                    System.out.println("No hay juegos paramostrar");
+                } else{
+                    for(int i=0; i < coleccionJuego.length; i++){
+                        if(coleccionJuego[i] != null){
+
+                        }
+                    }
+                }
+                    break;
+                case 8: //Juego con mas horas 
+                    break;
+                case 9: // Juego con menos horas
+                    break;
+                case 10: // Porcentaje de juegos acabados
+                    break;
+                case 11 : System.out.println("Saliendo...");
                     break;
                 default: System.out.println("Opcion no encontrada");
                     break;
             }
-        } while(opcion != 6);
+        } while(opcion != 11);
         sc.close();
     }
 }
