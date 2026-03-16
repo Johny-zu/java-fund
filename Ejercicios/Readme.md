@@ -13,3 +13,5 @@ Escribe un programa que reciba un texto y transforme lenguaje natural a "lenguaj
 Sistema para gestionar una colección de videojuegos. que se le iran agregando retos conforme se valla avanzando para agregar todo lo visto
   - Coleccion Basica
     - Agregar juego, completar, mostrar coleccion, mostrar solo completados, mostrar pendientes
+  - Estadisticas
+    - Total de juegos en coleccion, promedios de horas y porcentajes de terminacion
