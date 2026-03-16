@@ -25,4 +25,13 @@ public class FuncionesVid {
         System.out.println("El titulo: " + buscarTitulo + " no existe");
         return false;
     }
+
+    public static int contadorHoras(Juego[] coleccionJuegos){
+        int contador = 0;
+        for(int i = 0; i < coleccionJuegos.length; i++){
+            if (coleccionJuegos[i] != null) 
+                contador += coleccionJuegos[i].gethorasJugadas();
+        } 
+        return contador;
+    }
 }

@@ -136,13 +136,21 @@ public class GestionVid {
                     break;
                 case 7: //Promedio de horas jugadas
                 if (FuncionesVid.coleccionVacia(coleccionJuego)) {
-                    System.out.println("No hay juegos paramostrar");
+                    System.out.println("No hay juegos para mostrar");
                 } else{
-                    for(int i=0; i < coleccionJuego.length; i++){
+                    int contadorJuegos = 0;
+                    for(int i = 0; i < coleccionJuego.length; i++){
                         if(coleccionJuego[i] != null){
-
+                            contadorJuegos++;
                         }
                     }
+                    int horasTotales = FuncionesVid.contadorHoras(coleccionJuego);
+                    double promedioHoras = (double) horasTotales / contadorJuegos; //Casting
+                    
+                    if(promedioHoras == 0)
+                        System.out.println("No se han empezado los juegos");
+                    else
+                        System.out.println("El promedio de horas es: " + promedioHoras);
                 }
                     break;
                 case 8: //Juego con mas horas 
