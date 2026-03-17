@@ -1,4 +1,5 @@
 package Ejercicios.Playlist;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class GestionPlaylist {
@@ -14,8 +15,10 @@ public class GestionPlaylist {
                      "\n7.- Duración total de la playlist" +
                      "\n8.- ¿Cuántas canciones tengo?" +
                      "\n9.- Salir";
-        
         int opcion;
+
+        ArrayList<Cancion> playList = new ArrayList<>();
+        PlaylistService service = new PlaylistService();
 
         do{
             System.out.println(menu + "\n Escoje una opcion: ");
