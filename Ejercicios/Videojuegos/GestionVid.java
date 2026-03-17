@@ -1,4 +1,5 @@
 package Ejercicios.Videojuegos;
+import java.util.Random;
 import java.util.Scanner;
 
 public class GestionVid {
@@ -18,7 +19,7 @@ public class GestionVid {
                     "\n11.- Busqueda parcial de titulo" + 
                     "\n12.- Busqueda por rango de tiempo" + 
                     "\n13.- Recomendaciones de los no finalizados" +
-                    "\n15.- Salir";
+                    "\n14.- Salir";
         String titulo;
         int horasJugadas, opcion, tamañoColeccion;
         boolean completado = false;
@@ -212,10 +213,81 @@ public class GestionVid {
                 }
                     break;
                 case 11: //busqueda parcial
+                if (FuncionesVid.coleccionVacia(coleccionJuego)) {
+                    System.out.println("Sin titulos para buscar");
+                } else {
+                    boolean tituloHallado = false;
+                    String tituloEnBusqueda;
+                    System.out.println("Ingrese el titulo a buscar: ");
+                    sc.nextLine();
+                    tituloEnBusqueda = sc.nextLine();
+                    for (int i = 0; i < coleccionJuego.length; i++){
+                        if(coleccionJuego[i] != null){
+                            if(coleccionJuego[i].getTitulo().toLowerCase().contains(tituloEnBusqueda)){
+                                System.out.println("El juego es: " + coleccionJuego[i].getTitulo());
+                                tituloHallado = true;
+                            } 
+                        }
+                    }
+                    if (!tituloHallado) {
+                        System.out.println("No se hallaron coincidencias");
+                    }
+                }
                     break;
                 case 12: // por rango de tiempo
+                if (FuncionesVid.coleccionVacia(coleccionJuego)) {
+                    System.out.println("No hay juegos para buscar");
+                } else {
+                    int rangoMayor, rangoMenor;
+                    boolean enExitencia = false;
+                    String tituloHallado = "";
+                    System.out.printf("Ingresa rango menor: ");
+                    rangoMenor = sc.nextInt();
+                    System.out.printf("Ingresa rango mayor: ");
+                    rangoMayor = sc.nextInt();
+                    for(int i=0; i < coleccionJuego.length; i++){                        
+                        if(coleccionJuego[i] != null){
+                            if(coleccionJuego[i].gethorasJugadas() >= rangoMenor && coleccionJuego[i].gethorasJugadas() <= rangoMayor){
+                                    if(tituloHallado.isEmpty()) {
+                                        tituloHallado = coleccionJuego[i].getTitulo();
+                                    } else {
+                                        tituloHallado += ", " + coleccionJuego[i].getTitulo();
+                                    }
+                                    enExitencia = true;
+                            }   
+                        }
+                    }
+                    if (enExitencia) {
+                        System.out.println("Juegos en ese rango: " + tituloHallado);
+                    } else {
+                        System.out.println("No hay títulos en ese rango de tiempo");
+                    }
+                }
                     break; 
                 case 13: // recomendaciones de los no finalizados
+                if (FuncionesVid.coleccionVacia(coleccionJuego)) {
+                    System.out.println("No hay juegos para recomendar");
+                } else {
+                    int pendientes = FuncionesVid.juegosPendientes(coleccionJuego);
+                    if(pendientes == 0){
+                        System.out.println("No hay juegos pendientes");
+                    } else {
+                        Random random = new Random();
+                        int indiceRandom = random.nextInt(pendientes);
+                        int contador = 0;
+                        for(int i = 0; i < coleccionJuego.length; i++) {
+                            if(coleccionJuego[i] != null && !coleccionJuego[i].getCompletado()) {
+                                if(contador == indiceRandom) {
+                                    System.out.println("\nJuego Recomendado");
+                                    System.out.println(coleccionJuego[i].getTitulo());
+                                    System.out.println("\n" + coleccionJuego[i].recomendarJuego());
+                                    break;
+                                }
+                                contador++;
+                            }
+                        }
+                    }
+                }
                     break;
                 case 14 : System.out.println("Saliendo...");
                     break;

@@ -34,4 +34,14 @@ public class FuncionesVid {
         } 
         return contador;
     }
+
+    public static int juegosPendientes(Juego[] coleccionJuego){
+        int pendientes = 0;
+        for(int i = 0; i < coleccionJuego.length; i++) {
+            if(coleccionJuego[i] != null && !coleccionJuego[i].getCompletado()) {
+                pendientes++;
+            }
+        }
+        return pendientes;
+    }
 }
