@@ -8,7 +8,7 @@ public class Cancion {
     public Cancion(String titulo, String artista, int duracion, boolean favoritos){
         this.titulo = titulo;
         this.artista = artista;
-        this.duracion = duracion;
+        this.duracion = duracion > 0 ? duracion : 1;
         this.favoritos = favoritos;
     }
 
@@ -33,10 +33,7 @@ public class Cancion {
     }
 
     public void setDuracion(int duracion) {
-        if (duracion <= 0) 
-            this.duracion = 1;
-        else
-            this.duracion = duracion;
+        this.duracion = duracion > 0 ? duracion : 1;
     }
 
     public boolean isFavoritos() {
@@ -49,14 +46,15 @@ public class Cancion {
 
     public String toString(){
         String s = "";
+        String minutos = (getDuracion() / 60) + ":" + String.format("%02d", getDuracion() % 60);
         s += "La cancion se llama: " + getTitulo();
         s += "\nEl nombrel del artista es: " + getArtista();
-        s += "\nLa canción dura: " + getDuracion() + " segundos";
+        s += "\nLa canción dura: " + minutos;
         
         if (favoritos) {
             s += "\nEsta en favoritos";
         } else
-            s += "\nNo esta enfavoritos";
+            s += "\nNo esta en favoritos";
         
         return s;
     }
