@@ -17,3 +17,9 @@ Sistema para gestionar una colección de videojuegos. que se le iran agregando r
     - Total de juegos en coleccion, promedios de horas y porcentajes de terminacion
   - Busqueda y filtros
     - Busqueda parcial por titulo, buscar juego por rango de tiempo, recomendaciones
+
+## Ejercicio 4: Encarpetado de playlist
+Sistema para aplicativos de musica, este se busca que sea como el de encarpetado de juegos con la diferencia del uso de librerias especializadas con el fin de probar hacer el codigo mas sencillo y limpio, usando la siguiente estructura
+  - Cancion: Clase de instancia para la plantilla de objeto
+  - PlaylistService: Clase de de logica para funciones
+  - GestionPlaylist: Clase menu principal para la interaccion del usuario
