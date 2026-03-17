@@ -96,7 +96,6 @@ public class GestionPlaylist {
                         }
                     }
                 }
-                ArrayList<Cancion> favoritas = service.obtenerFavoritas(playlist);
                     break;
                 case 6: if (service.estaVacia(playlist)) {
                     System.out.println("No hay canciones para mostrar");
