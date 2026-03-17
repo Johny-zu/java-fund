@@ -22,7 +22,15 @@ public class GestionPlaylist {
 
         do{
             System.out.println(menu + "\n Escoje una opcion: ");
-            opcion = sc.nextInt();
+            //Validacon de ingreso de numeros como opcion
+            if (sc.hasNext()) {
+                opcion = sc.nextInt();
+                sc.nextLine();
+            } else {
+                System.out.println("Favor de ingresar un numero");
+                sc.nextLine();
+                opcion = 0;
+            }
             switch (opcion) {
                 case 1:
                     break;
