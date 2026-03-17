@@ -154,10 +154,59 @@ public class GestionVid {
                 }
                     break;
                 case 8: //Juego con mas horas 
+                if(FuncionesVid.coleccionVacia(coleccionJuego)){
+                    System.out.println("No hay juegos por mostrar");
+                } else {
+                    int mayor = 0;
+                    String nombreJuego = "";
+                    for(int i = 0; i < coleccionJuego.length; i++){
+                        if(coleccionJuego[i] != null){
+                            if (mayor < coleccionJuego[i].gethorasJugadas()) {
+                                mayor = coleccionJuego[i].gethorasJugadas();
+                                nombreJuego = coleccionJuego[i].getTitulo();
+                            }
+                        }
+                    }
+                    System.out.println("El juego mayor jugado es: " + nombreJuego);
+                }
                     break;
                 case 9: // Juego con menos horas
+                if(FuncionesVid.coleccionVacia(coleccionJuego)){
+                    System.out.println("No hay juegos por mostrar");
+                } else {
+                    int menor = 1000;
+                    String nombreJuego = "";
+                    for(int i = 0; i < coleccionJuego.length; i++){
+                        if(coleccionJuego[i] != null){
+                            if (menor > coleccionJuego[i].gethorasJugadas()) {
+                                menor = coleccionJuego[i].gethorasJugadas();
+                                nombreJuego = coleccionJuego[i].getTitulo();
+                            }
+                        }
+                    }
+                    System.out.println("El juego menor jugado es: " + nombreJuego);
+                }
                     break;
                 case 10: // Porcentaje de juegos acabados
+                if(FuncionesVid.coleccionVacia(coleccionJuego)){
+                    System.out.println("No hay juegos para contar");
+                } else{
+                    int totalJuegos = 0, juegosCompletados=0;
+                    for(int i = 0; i < coleccionJuego.length; i++){
+                        if(coleccionJuego[i] != null){
+                            totalJuegos++;
+                            if(coleccionJuego[i].getCompletado()){
+                                juegosCompletados++;
+                            }
+                        }
+                    }
+                    if(juegosCompletados == 0){
+                        System.out.println("No hay juegos completados");
+                    } else {
+                        double porcentaje = (juegosCompletados * 100.0) / totalJuegos;
+                        System.out.println("El porcentaje de juegos acabados es: " + porcentaje + "%");
+                    }
+                }
                     break;
                 case 11 : System.out.println("Saliendo...");
                     break;
