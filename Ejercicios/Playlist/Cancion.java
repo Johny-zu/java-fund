@@ -58,4 +58,8 @@ public class Cancion {
         
         return s;
     }
+
+    public boolean esMismaCancion(String titulo, String artista){
+        return this.titulo.equalsIgnoreCase(titulo) && this.artista.equalsIgnoreCase(artista);
+    }
 }

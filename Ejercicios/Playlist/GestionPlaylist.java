@@ -17,7 +17,7 @@ public class GestionPlaylist {
                      "\n9.- Salir";
         int opcion;
 
-        ArrayList<Cancion> playList = new ArrayList<>();
+        ArrayList<Cancion> playlist = new ArrayList<>();
         PlaylistService service = new PlaylistService();
 
         do{
