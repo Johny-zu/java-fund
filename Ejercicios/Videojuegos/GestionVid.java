@@ -15,7 +15,10 @@ public class GestionVid {
                     "\n8.- Juego con mas horas" + 
                     "\n9.- Juego con menos horas" +
                     "\n10.- Porcentaje de juegos completado" +
-                    "\n11.- Salir";
+                    "\n11.- Busqueda parcial de titulo" + 
+                    "\n12.- Busqueda por rango de tiempo" + 
+                    "\n13.- Recomendaciones de los no finalizados" +
+                    "\n15.- Salir";
         String titulo;
         int horasJugadas, opcion, tamañoColeccion;
         boolean completado = false;
@@ -208,12 +211,18 @@ public class GestionVid {
                     }
                 }
                     break;
-                case 11 : System.out.println("Saliendo...");
+                case 11: //busqueda parcial
+                    break;
+                case 12: // por rango de tiempo
+                    break; 
+                case 13: // recomendaciones de los no finalizados
+                    break;
+                case 14 : System.out.println("Saliendo...");
                     break;
                 default: System.out.println("Opcion no encontrada");
                     break;
             }
-        } while(opcion != 11);
+        } while(opcion != 14);
         sc.close();
     }
 }

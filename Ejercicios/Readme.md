@@ -15,3 +15,5 @@ Sistema para gestionar una colección de videojuegos. que se le iran agregando r
     - Agregar juego, completar, mostrar coleccion, mostrar solo completados, mostrar pendientes
   - Estadisticas
     - Total de juegos en coleccion, promedios de horas y porcentajes de terminacion
+  - Busqueda y filtros
+    - Busqueda parcial por titulo, buscar juego por rango de tiempo, recomendaciones
