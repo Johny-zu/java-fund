@@ -12,7 +12,7 @@ public class Productos {
         this.cantidadStock = cantidadStock > 0 ? cantidadStock : 0;
         this.nombre = nombre;
         this.categoria = categoria;
-        this.precio = precio > 0 ? cantidadStock : 1;
+        this.precio = precio > 0 ? precio : 1.0;
         this.fecha = fecha;
     }
 
@@ -53,7 +53,7 @@ public class Productos {
     }
 
     public void setPrecio(double precio) {
-        this.precio = precio > 0 ? cantidadStock : 1;
+        this.precio = precio > 0 ? precio : 1.0;
     }
 
     public LocalDate getFecha() {
@@ -68,6 +68,21 @@ public class Productos {
         return getCantidadStock() > 0 ? true : false;
     }
 
+    public boolean esMismaCategoria(String categoria){
+        if (categoria == null || this.categoria == null)
+            return false;
+        else 
+            return this.categoria.equalsIgnoreCase(categoria);
+    }
+
+    public double valorTotalProducto(){
+        return getPrecio() * getCantidadStock();
+    }
+
+    public boolean necesitaReposicion(){
+        return getCantidadStock() < 5 ? true : false;
+    }
+
     public String toString(){
         String s = "";
         s += "El ID del producto es: " + getId();
@@ -76,9 +91,10 @@ public class Productos {
         s += "\nEl precio del producto es: " + getPrecio();
         s += "\nLa fecha de ingreso fue: " + getFecha();
 
-        if (enExistencia()) 
-            s += "\nHay " + getCantidadStock() + " en existencia";
-        else
+        if (enExistencia()) {
+            s += "\nHay " + getCantidadStock() + " unidades en existencia";
+            s += "\nEl valor total del producto es: " + valorTotalProducto();
+        } else
             s += "\nSin existencia del producto";
         return s;
     }

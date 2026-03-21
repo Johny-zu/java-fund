@@ -23,3 +23,10 @@ Sistema para aplicativos de musica, este se busca que sea como el de encarpetado
   - Cancion: Clase de instancia para la plantilla de objeto
   - PlaylistService: Clase de de logica para funciones
   - GestionPlaylist: Clase menu principal para la interaccion del usuario
+
+## Ejercicio 5: Encarpetado de Inventario
+sistema de inventario. 
+    - Controlar los productos que entran y salen
+    - Saber qué productos están por agotarse
+    - Conocer el valor total del inventario
+    - Identificar productos de una misma categoría
