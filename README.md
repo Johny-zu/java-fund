@@ -18,3 +18,6 @@ En esta carpeta seran ejercicios usando todo lo que se ha aprendido para ir aume
 
 ## POO
 En esta nos aventuraremos a Programación orientada a objetos
+
+## BD
+Carpeta donde concentrara codigo nuevo para ingreso de BD, se usara mysql como gestor de BD para practicas primerizas de BD, para la referencias de comandos o informacion se usara la siguiente liga: https://github.com/Johny-zu/Repo-SQL-Oracle
