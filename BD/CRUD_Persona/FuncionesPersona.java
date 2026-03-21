@@ -54,4 +54,22 @@ public class FuncionesPersona {
                 pstmt.executeUpdate();
             }
     }
+
+    public Persona busacarID(int id) throws SQLException{
+        String sql = "Select * from datos_personas where id=?";
+        try(Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
+                pstmt.setInt(1, id);
+                ResultSet rs = pstmt.executeQuery();
+                if (rs.next()) {
+                    return new Persona(
+                        rs.getInt("id"),
+                        rs.getString("nombre"),
+                        rs.getInt("edad"),
+                        rs.getString("email")
+                    );
+                }
+            return null;
+        }
+    }
 }
