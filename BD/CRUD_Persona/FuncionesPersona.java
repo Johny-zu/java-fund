@@ -33,4 +33,16 @@ public class FuncionesPersona {
             }
         return personas;
     }
+
+    public void actualizar(Persona persona) throws SQLException{
+        String sql = "UPDATE datos_personas SET nombre=?, edad=?, email=? WHERE id=?";
+        try(Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
+                pstmt.setString(1, persona.getNombre());
+                pstmt.setInt(2, persona.getEdad());
+                pstmt.setString(3, persona.getEmail());
+                pstmt.setInt(4, persona.getId());
+                pstmt.executeUpdate();
+        }
+    }
 }
