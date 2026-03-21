@@ -14,4 +14,23 @@ public class FuncionesPersona {
             pstmt.executeUpdate();
         }
     }
+    
+    public List<Personas> enlistarTodos() throws SQLException{
+        List<Personas> personas = new ArrayList<>();
+        String sql = "SELECT * FROM datos_personas";
+        try(Connection conn = DatabaseConnection.getConnection();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql)){
+                while (rs.next()) {
+                    Personas p = new Persona(
+                        rs.getInt("id"),
+                        rs.getString("nombre"),
+                        rs.getInt("edad"),
+                        rs.getString("email")
+                    );
+                    personas.add(p);
+                }
+            }
+        return personas;
+    }
 }
