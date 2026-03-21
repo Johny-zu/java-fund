@@ -45,4 +45,13 @@ public class FuncionesPersona {
                 pstmt.executeUpdate();
         }
     }
+
+    public void eliminar(Persona persona) throws SQLException{
+        String sql = "DELETE FROM datos_personas WHERE id=?";
+        try(Connection conn = DatabaseConnection.getConnection();
+            prepareStatement pstmt = conn.prepareStatement(sql)){
+                pstmt.setInt(1, id);
+                pstmt.executeUpdate();
+            }
+    }
 }
