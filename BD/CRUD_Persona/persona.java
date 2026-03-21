@@ -1,6 +1,6 @@
 package BD.CRUD_Persona;
 
-public class persona {
+public class Persona {
     private int id, edad;
     private String nombre, email;
 
