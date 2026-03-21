@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FuncionesPersona {
+    public boolean listaVacia(Persona<persona> listadoPersonas){
+        if (listadoPersonas == null || listadoPersonas.isEmpty()) {
+            return true;
+        } else return false;
+    }
+
     public void insertar(Persona persona) throws SQLException {
         String sql = "INSERT INTO personas (nombre, edad, email) VALUES (?, ?, ?)";
         try (Connection conn = DatabaseConnection.getConnection();
