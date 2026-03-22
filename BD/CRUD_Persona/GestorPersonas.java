@@ -8,8 +8,6 @@ public class GestorPersonas {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         FuncionesPersona funcionesPersonas = new FuncionesPersona();
-        ArrayList<Persona> listadoPersonas = new ArrayList<>();
-
         String menu = "1.- Ingresa a una persona" +
                     "\n2.- Listar a las personas" + 
                     "\n3.- Actualizar a una persona" +
