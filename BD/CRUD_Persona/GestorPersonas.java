@@ -21,13 +21,21 @@ public class GestorPersonas {
         do{
             System.out.printf(menu + "\nIngrresa una opcion: ");
             try {
-                sc.nextInt();
+                op = sc.nextInt();
                 sc.nextLine();
             } catch (Exception e) {
                 System.out.println("Ingresa un opcion valida");
             }
             switch (op) {
-                case 1: 
+                case 1: System.out.println("Ingresa el nombre de la personas: ");
+                nombre = sc.nextLine();
+                System.out.println("Ingresa la edad de la persona: ");
+                edad = sc.nextInt();
+                sc.nextLine();
+                System.out.println("Ingresa el email de la persona: ");
+                email = sc.nextLine();
+                Persona nuevaPersona = new Persona(nombre, edad, email);
+                funcionesPersonas.insertar(nuevaPersona);
                     break;
                case 2:
                     

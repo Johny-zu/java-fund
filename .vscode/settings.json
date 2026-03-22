@@ -1,6 +1,6 @@
 {
     "java.project.sourcePaths": [
-        "lib"
+        "lib",
     ],
     "java.project.referencedLibraries": [
         "c:\\Users\\angel\\Downloads\\Workspace\\java-fund\\lib\\mysql-connector-j-9.6.0.jar"

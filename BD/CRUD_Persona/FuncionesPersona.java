@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FuncionesPersona {
-    public boolean listaVacia(Persona<persona> listadoPersonas){
+    public boolean listaVacia(ArrayList<persona> listadoPersonas){
         if (listadoPersonas == null || listadoPersonas.isEmpty()) {
             return true;
         } else return false;
@@ -21,14 +21,14 @@ public class FuncionesPersona {
         }
     }
     
-    public List<Personas> enlistarTodos() throws SQLException{
-        List<Personas> personas = new ArrayList<>();
+    public List<Persona> enlistarTodos() throws SQLException{
+        List<Persona> personas = new ArrayList<>();
         String sql = "SELECT * FROM datos_personas";
         try(Connection conn = DatabaseConnection.getConnection();
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql)){
                 while (rs.next()) {
-                    Personas p = new Persona(
+                    Persona p = new Persona(
                         rs.getInt("id"),
                         rs.getString("nombre"),
                         rs.getInt("edad"),
