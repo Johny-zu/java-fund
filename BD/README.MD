@@ -14,7 +14,8 @@ En este encarpetado se realizo una conexion a la BD y se estuvo dando a conocer 
 
 ## Encarpetado Hotel
 En este programa se hara para generar un mejor nivel de profundidad con operaciones y funciones de base de datos, en esta al ser mas compleja se busca que se pueda observar todo lo que se ha trabajado, la estructura sera mas compleja que la anterior incluyendo varias tablas, mas tipos de operaciones y generando un mejor modulo de informacion para que la practica sea lo suficientemente correcta. la estructura sera la siguiente
-    - Modulo de habitaciones: 
+ 
+    - Modulo de habitaciones 
     - Modulo de huespedes
     - Modulo de reservas
     - Modulo de pagos
