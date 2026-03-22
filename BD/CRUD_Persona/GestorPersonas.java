@@ -16,26 +16,34 @@ public class GestorPersonas {
                     "\n5.- Salir";
 
         String nombre, email;
-        int edad, op;
+        int edad;
 
+        int opcion;
         do{
             System.out.printf(menu + "\nIngrresa una opcion: ");
             try {
-                op = sc.nextInt();
+                opcion = sc.nextInt();
                 sc.nextLine();
             } catch (Exception e) {
                 System.out.println("Ingresa un opcion valida");
+                opcion = 0;
             }
-            switch (op) {
-                case 1: System.out.println("Ingresa el nombre de la personas: ");
-                nombre = sc.nextLine();
-                System.out.println("Ingresa la edad de la persona: ");
-                edad = sc.nextInt();
-                sc.nextLine();
-                System.out.println("Ingresa el email de la persona: ");
-                email = sc.nextLine();
-                Persona nuevaPersona = new Persona(nombre, edad, email);
-                funcionesPersonas.insertar(nuevaPersona);
+            switch (opcion) {
+                case 1:
+                    System.out.println("Ingresa el nombre de la persona:");
+                    nombre = sc.nextLine();
+                    System.out.println("Ingresa la edad de la persona:");
+                    edad = sc.nextInt();
+                    sc.nextLine();
+                    System.out.println("Ingresa el email de la persona:");
+                    email = sc.nextLine();
+                    Persona nuevaPersona = new Persona(nombre, edad, email);
+                    try {
+                        funcionesPersonas.insertar(nuevaPersona);
+                        System.out.println("Persona insertada correctamente");
+                    } catch (Exception e) {
+                        System.out.println("Error al insertar: " + e.getMessage());
+                    }
                     break;
                case 2:
                     
@@ -51,6 +59,6 @@ public class GestorPersonas {
                 default: System.out.println("ingresa una opcion valida");
                     break;
             }
-        } while(op != 5);
+        } while(opcion != 5);
     }
 }

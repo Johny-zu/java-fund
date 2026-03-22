@@ -1,4 +1,4 @@
-package BD.DatabaseConnection;
+package BD.CRUD_Persona;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
