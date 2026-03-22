@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FuncionesPersona {
-    public boolean listaVacia(ArrayList<persona> listadoPersonas){
+    public boolean listaVacia(ArrayList<Persona> listadoPersonas){
         if (listadoPersonas == null || listadoPersonas.isEmpty()) {
             return true;
         } else return false;
     }
 
     public void insertar(Persona persona) throws SQLException {
-        String sql = "INSERT INTO personas (nombre, edad, email) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO datos_personas (nombre, edad, email) VALUES (?, ?, ?)";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, persona.getNombre());
@@ -55,8 +55,8 @@ public class FuncionesPersona {
     public void eliminar(Persona persona) throws SQLException{
         String sql = "DELETE FROM datos_personas WHERE id=?";
         try(Connection conn = DatabaseConnection.getConnection();
-            prepareStatement pstmt = conn.prepareStatement(sql)){
-                pstmt.setInt(1, id);
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
+                pstmt.setInt(1, persona.getId());
                 pstmt.executeUpdate();
             }
     }
