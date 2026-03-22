@@ -1,6 +1,4 @@
 package BD.CRUD_Persona;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -22,7 +20,7 @@ public class GestorPersonas {
 
         int opcion;
         do{
-            System.out.printf(menu + "\nIngrresa una opcion: ");
+            System.out.printf(menu + "\nIngresa una opcion: ");
             try {
                 opcion = sc.nextInt();
                 sc.nextLine();
@@ -62,8 +60,41 @@ public class GestorPersonas {
                     //e.printStackTrace();
                 }                   
                     break;
-               case 3:
-                    
+               case 3: // apdate
+                System.out.printf("Ingresa el ID de la persona a actualizar: ");
+                int id = sc.nextInt();
+                sc.nextLine();
+                try {
+                    Persona personaExistente = funcionesPersonas.busacarID(id);
+                if (personaExistente == null) {
+                            System.out.println("No existe una persona con ID: " + id);
+                        } else {
+                            System.out.println("Datos actuales:");
+                            System.out.println(personaExistente);
+                            System.out.println("\nIngresa los nuevos datos:");
+                            
+                            System.out.print("Ingrese nombre: ");
+                            String nuevoNombre = sc.nextLine();
+                            System.out.print("Ingrese la edad: ");
+                            int nuevaEdad = sc.nextInt();
+                            sc.nextLine();
+                            System.out.print("Ingrese el email: ");
+                            String nuevoEmail = sc.nextLine();
+                            
+                            // Crear persona con los datos actualizados (conservando el mismo ID)
+                            Persona personaActualizada = new Persona(id, nuevoNombre, nuevaEdad, nuevoEmail);
+                        try {
+                            funcionesPersonas.actualizar(personaActualizada);
+                            System.out.println("Persona actualizada con exito");
+                        } catch (Exception e) {
+                            System.out.println("Fallo la operacion");
+                            e.printStackTrace();   
+                        }
+                    }
+                } catch (Exception e) {
+                    System.out.println("No se logro ingresar a la BD");
+                    e.printStackTrace();
+                }
                     break;
                case 4:
                     
@@ -74,5 +105,6 @@ public class GestorPersonas {
                     break;
             }
         } while(opcion != 5);
+        sc.close();;
     }
 }
