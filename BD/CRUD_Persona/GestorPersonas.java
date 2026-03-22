@@ -1,6 +1,8 @@
 package BD.CRUD_Persona;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class GestorPersonas {
@@ -46,7 +48,19 @@ public class GestorPersonas {
                     }
                     break;
                case 2:
-                    
+                try {
+                    List<Persona> personas = funcionesPersonas.enlistarTodos();
+                    if (personas.isEmpty()) {
+                        System.out.println("No hay datos por mostrar");
+                    } else {
+                        for (Persona per : personas) {
+                            System.out.println(per.toString() + "\n");
+                        }
+                    }
+                } catch (Exception e) {
+                    System.out.println("No se pudo relizar la operacion");
+                    //e.printStackTrace();
+                }                   
                     break;
                case 3:
                     
