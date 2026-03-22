@@ -30,12 +30,12 @@ public class GestorPersonas {
             }
             switch (opcion) {
                 case 1:
-                    System.out.println("Ingresa el nombre de la persona:");
+                    System.out.printf("Ingresa el nombre de la persona: ");
                     nombre = sc.nextLine();
-                    System.out.println("Ingresa la edad de la persona:");
+                    System.out.printf("Ingresa la edad de la persona: ");
                     edad = sc.nextInt();
                     sc.nextLine();
-                    System.out.println("Ingresa el email de la persona:");
+                    System.out.printf("Ingresa el email de la persona: ");
                     email = sc.nextLine();
                     Persona nuevaPersona = new Persona(nombre, edad, email);
                     try {

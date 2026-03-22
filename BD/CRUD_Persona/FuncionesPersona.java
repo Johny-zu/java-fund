@@ -11,7 +11,7 @@ public class FuncionesPersona {
     }
 
     public void insertar(Persona persona) throws SQLException {
-        String sql = "INSERT INTO personas (nombre, edad, email) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO datos_personas (nombre, edad, email) VALUES (?, ?, ?)";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, persona.getNombre());
