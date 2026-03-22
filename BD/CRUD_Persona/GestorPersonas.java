@@ -1,4 +1,5 @@
 package BD.CRUD_Persona;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -96,9 +97,31 @@ public class GestorPersonas {
                     e.printStackTrace();
                 }
                     break;
-               case 4:
-                    
-                    break;
+               case 4: // Eliminar
+                System.out.printf("Ingresa el ID de la persona a eliminar: ");
+                int idEliminar = sc.nextInt();
+                sc.nextLine();
+                try {
+                    // Verificar si existe
+                    Persona personaEliminar = funcionesPersonas.busacarID(idEliminar);
+                    if (personaEliminar == null) {
+                        System.out.println("No existe una persona con ID: " + idEliminar);
+                    } else {
+                        System.out.println("Persona a eliminar:");
+                        System.out.println(personaEliminar);
+                        System.out.print("¿Estás seguro? (s/n): ");
+                        String confirmacion = sc.nextLine();
+                        if (confirmacion.equalsIgnoreCase("s")) {
+                            funcionesPersonas.eliminarPorID(idEliminar);
+                        } else {
+                            System.out.println("Operacion cancelada");
+                        }
+                    }
+                } catch (SQLException e) {
+                    System.out.println("Error al eliminar: " + e.getMessage());
+                    e.printStackTrace();
+                }
+                break;
                case 5: System.out.println("Saliendo del programa..."); 
                     break;
                 default: System.out.println("ingresa una opcion valida");

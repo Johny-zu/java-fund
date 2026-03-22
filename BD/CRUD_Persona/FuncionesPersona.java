@@ -52,13 +52,18 @@ public class FuncionesPersona {
         }
     }
 
-    public void eliminar(Persona persona) throws SQLException{
+    public void eliminarPorID(int id) throws SQLException{
         String sql = "DELETE FROM datos_personas WHERE id=?";
         try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql)){
-                pstmt.setInt(1, persona.getId());
-                pstmt.executeUpdate();
+            pstmt.setInt(1, id);
+            int filasAfectadas = pstmt.executeUpdate();
+            if (filasAfectadas > 0) {
+                System.out.println("Persona eliminada con exito");
+            } else {
+                System.out.println("No se encontro persona con ID: " + id);
             }
+        }
     }
 
     public Persona busacarID(int id) throws SQLException{
