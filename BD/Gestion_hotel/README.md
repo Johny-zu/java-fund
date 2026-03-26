@@ -5,10 +5,22 @@ Para realizar la siguiente actividad se estara realizando con la siguiente infor
 
 ## Encarpetado Modelo
 En este encarpetado hallaremos las clases objetos con las que se estaran trabajando las cuales seran las siguientes: 
- - Habitacion
- - Huesped
- - Reserva
- - Detalles para reserva (Representara la habitacion detro de una reserva)
- - Pago
+- Estado
+- EstadoHabitacion
+- Habitacion
+- Huesped
+- Metodo
+- Pagos
+- ReservasHasHabitaciones
+- TipoHabitacion
+- Reservas
 
 Estas se hacen con el fin de dar las clases que se usaran de molde para todas las actividades que se estaran trabajando, y estas se basan en la estructura del esquema de la BD.
+
+## Encarpetado FuncionesHotel
+Dentro de este encarpetado se hallaran las clases con funciones para hacer trabajar la logica interna de la clase, se esta planeando llevar las siguientes clases para este nuevo encarpetado de funciones:
+
+- FuncionesHabitacion
+- FuncionesHuesped
+- FuncionesReservas
+- FuncionesPagos
