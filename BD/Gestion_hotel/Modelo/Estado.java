@@ -2,8 +2,8 @@ package BD.Gestion_hotel.Modelo;
 
 public enum Estado {
     CONFIRMADA("confirmada"),
-    CHEK_IN("check_in"),
-    CHEK_OUT("check_out"),
+    CHECK_IN("check_in"),
+    CHECK_OUT("check_out"),
     CANCELADA("cancelada");
 
     private final String valor;
