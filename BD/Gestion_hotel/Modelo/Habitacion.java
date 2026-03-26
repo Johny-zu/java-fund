@@ -53,7 +53,7 @@ public class Habitacion {
         this.tipo = tipo;
     }
     
-    public double getprecio_noche() {
+    public double getPrecio_noche() {
         return precio_noche;
     }
 
@@ -98,7 +98,7 @@ public class Habitacion {
         s += "El id de la habitacion es: " + getId_habitacion();
         s += "\nEl numero de la habitación es: " + getNumero();
         s += "\nEl tipo de habitacion es: " + tipo.getValor();
-        s += "\nEL precio por noche es: " + getprecio_noche();
+        s += "\nEL precio por noche es: " + getPrecio_noche();
         s += "\nLa capacidad de la habitacion es: " + getCapacidad();
         s += "\nLa habitacion actualmente se encuentra: " + estado.getValor();
         return s;
