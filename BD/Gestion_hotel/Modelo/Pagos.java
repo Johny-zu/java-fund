@@ -29,7 +29,7 @@ public class Pagos {
         return id_pago;
     }
 
-    public void setId_pago(int nuevoId_pago){
+    public void setId_pago(int id_pago){
         if (id_pago > 0) {
                 this.id_pago = id_pago;
         } else{
