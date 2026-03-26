@@ -1,10 +1,13 @@
 package BD.Gestion_hotel.Modelo;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Huesped {
     private int id_huesped;
     private String nombre, email, telefono, documento;
     private LocalDate fecha_registro;
+    private List<Reservas> reservas;
 
     public Huesped(String nombre, String email, String telefono, String documento, LocalDate fecha_registro){
         this.nombre = nombre;
@@ -12,6 +15,7 @@ public class Huesped {
         this.telefono = telefono;
         this.documento = documento;
         this.fecha_registro = fecha_registro;
+        this.reservas = new ArrayList<>();
     }
 
     public Huesped(int id_huesped, String nombre, String email, String telefono, String documento, LocalDate fecha_registro){
@@ -21,9 +25,10 @@ public class Huesped {
         this.telefono = telefono;
         this.documento = documento;
         this.fecha_registro = fecha_registro;
+        this.reservas = new ArrayList<>();
     }
 
-        public int getId_huesped() {
+    public int getId_huesped() {
         return id_huesped;
     }
     
@@ -94,6 +99,14 @@ public class Huesped {
             throw new IllegalArgumentException("La fecha de registro no puede ser nula");
         }
     }
+
+    public List<Reservas> getReservas() {
+        return reservas;
+    }
+
+    public void setReservas(List<Reservas> reservas) {
+        this.reservas = reservas != null ? reservas : new ArrayList<>();
+    }
     
     @Override
     public String toString() {
@@ -118,5 +131,11 @@ public class Huesped {
     
     public boolean isDocumentoValido() {
         return documento != null && documento.matches("^[A-Z0-9]{6,20}$");
+    }
+    
+    public void agregarReserva(Reservas reserva) {
+        if (reserva != null) {
+            this.reservas.add(reserva);
+        }
     }
 }
