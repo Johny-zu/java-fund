@@ -1,4 +1,6 @@
 package BD.Gestion_hotel.Modelo;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Habitacion {
     private int id_habitacion;
@@ -7,6 +9,7 @@ public class Habitacion {
     private double precio_noche;
     private int capacidad;
     private EstadoHabitacion estado;
+    private List<ReservasHasHabitaciones> reservas;
 
     public Habitacion(String numero, TipoHabitacion tipo, double precio_noche, int capacidad, EstadoHabitacion estado) {
         this.numero = numero;
@@ -14,6 +17,7 @@ public class Habitacion {
         this.precio_noche = precio_noche;
         this.capacidad = capacidad;
         this.estado = estado;
+        this.reservas = new ArrayList<>();
     }
 
     public Habitacion(int id_habitacion, String numero, TipoHabitacion tipo, double precio_noche, int capacidad, EstadoHabitacion estado) {
@@ -23,6 +27,7 @@ public class Habitacion {
         this.precio_noche = precio_noche;
         this.capacidad = capacidad;
         this.estado = estado;
+        this.reservas = new ArrayList<>();
     }
     public int getId_habitacion() {
         return id_habitacion;
@@ -80,6 +85,14 @@ public class Habitacion {
         this.estado = estado;
     }
 
+    public List<ReservasHasHabitaciones> getReservas() {
+        return reservas;
+    }
+
+    public void setReservas(List<ReservasHasHabitaciones> reservas) {
+        this.reservas = reservas != null ? reservas : new ArrayList<>();
+    }
+
     public String toString(){
         String s = "";
         s += "El id de la habitacion es: " + getId_habitacion();
@@ -89,5 +102,11 @@ public class Habitacion {
         s += "\nLa capacidad de la habitacion es: " + getCapacidad();
         s += "\nLa habitacion actualmente se encuentra: " + estado.getValor();
         return s;
+    }
+
+    public void agregarReserva(ReservasHasHabitaciones reserva) {
+        if (reserva != null) {
+            this.reservas.add(reserva);
+        }
     }
 }
