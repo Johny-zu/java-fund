@@ -60,4 +60,17 @@ public class FuncionHabitacion {
                     stmt.executeUpdate();
         }
     }
+
+    public void eliminarPorID(int id)throws SQLException{
+        String sql = "DELETE FROM habitaciones WHERE id_habitacion=?";
+        try(Connection conn = ConexionBaseDatos.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
+                pstmt.setInt(1, id);
+                int filaAfectada = pstmt.executeUpdate();
+                if(filaAfectada > 0)
+                    System.out.println("Habitacion eliminada con exito");
+                else 
+                    System.out.println("No se hallo la habitacion con el id: " + id);
+            }
+    }
 }
