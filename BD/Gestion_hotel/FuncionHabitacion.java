@@ -2,9 +2,8 @@ package BD.Gestion_hotel;
 import java.sql.*;  
 import java.util.ArrayList;
 import java.util.List;
-import BD.CRUD_Persona.DatabaseConnection;
 import BD.Gestion_hotel.Modelo.Habitacion;
-import BD.Gestion_hotel.Modelo.TipoHabitacion;      
+import BD.Gestion_hotel.Modelo.TipoHabitacion;
 import BD.Gestion_hotel.Modelo.EstadoHabitacion;    
 
 public class FuncionHabitacion {
@@ -17,7 +16,7 @@ public class FuncionHabitacion {
     public List<Habitacion> enlistarHabitaciones() throws SQLException{
         List<Habitacion> habitacion = new ArrayList<>();
         String sql = "SELECT * FROM habitaciones";
-        try(Connection conn = DatabaseConnection.getConnection();
+        try(Connection conn = ConexionBaseDatos.getConnection();
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql)){
                 while (rs.next()) {
@@ -33,5 +32,18 @@ public class FuncionHabitacion {
                 }
             }
         return habitacion;
+    }
+
+    public void insertar(Habitacion habitacion) throws SQLException{
+    String sql = "INSERT INTO habitaciones (numero, tipo, precio_noche, capacidad, estado) VALUES (?, ?, ?, ?, ?)";
+    try(Connection conn = ConexionBaseDatos.getConnection(); 
+            PreparedStatement stmt = conn.prepareStatement(sql)){
+                stmt.setString(1, habitacion.getNumero());                    
+                stmt.setString(2, habitacion.getTipo().getValor());          
+                stmt.setDouble(3, habitacion.getPrecio_noche());
+                stmt.setInt(4, habitacion.getCapacidad());                   
+                stmt.setString(5, habitacion.getEstado().getValor());        
+                stmt.executeUpdate();
+        }
     }
 }
