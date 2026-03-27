@@ -46,4 +46,18 @@ public class FuncionHabitacion {
                 stmt.executeUpdate();
         }
     }
+
+    public void actualizar(Habitacion habitacion) throws SQLException{
+        String sql = "UPDATE habitaciones SET numero=?, tipo=?, precio_noche=?, capacidad=?, estado=? WHERE id_habitacion=?";
+        try(Connection conn = ConexionBaseDatos.getConnection(); 
+                PreparedStatement stmt = conn.prepareStatement(sql)){
+                    stmt.setString(1, habitacion.getNumero());                    
+                    stmt.setString(2, habitacion.getTipo().getValor());          
+                    stmt.setDouble(3, habitacion.getPrecio_noche());
+                    stmt.setInt(4, habitacion.getCapacidad());                   
+                    stmt.setString(5, habitacion.getEstado().getValor());
+                    stmt.setInt(6, habitacion.getId_habitacion()); 
+                    stmt.executeUpdate();
+        }
+    }
 }
