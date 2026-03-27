@@ -73,4 +73,24 @@ public class FuncionHabitacion {
                     System.out.println("No se hallo la habitacion con el id: " + id);
             }
     }
+
+    public Habitacion buscarID(int id) throws SQLException{
+        String sql = "SELECT * FROM habitaciones WHERE id_habitacion=?";
+        try(Connection conn = ConexionBaseDatos.getConnection();
+            PreparedStatement pstst = conn.prepareStatement(sql)){
+                pstst.setInt(1, id);
+                ResultSet rs = pstst.executeQuery();
+                if (rs.next()) {
+                    return new Habitacion(
+                        rs.getInt("id_habitacion"),                                    
+                        rs.getString("numero"),                                        
+                        TipoHabitacion.fromString(rs.getString("tipo")),              
+                        rs.getDouble("precio_noche"),
+                        rs.getInt("capacidad"),
+                        EstadoHabitacion.fromString(rs.getString("estado"))           
+                    );
+                }
+            }
+        return null;
+    }
 }
