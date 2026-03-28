@@ -1,9 +1,10 @@
-package BD.Gestion_hotel;
+package BD.Gestion_hotel.FuncionesHotel;
 import java.sql.*;  
 import java.util.ArrayList;
 import java.util.List;
 import BD.Gestion_hotel.Modelo.Habitacion;
 import BD.Gestion_hotel.Modelo.TipoHabitacion;
+import BD.Gestion_hotel.ConexionBaseDatos;
 import BD.Gestion_hotel.Modelo.EstadoHabitacion;    
 
 public class FuncionHabitacion {
