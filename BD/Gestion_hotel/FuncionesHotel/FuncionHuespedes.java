@@ -1,4 +1,5 @@
 package BD.Gestion_hotel.FuncionesHotel;
+import java.net.ConnectException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -44,7 +45,23 @@ public class FuncionHuespedes {
                 pstmt.setString(3, huesped.getTelefono());
                 pstmt.setString(4, huesped.getDocumento());
                 pstmt.setDate(5, java.sql.Date.valueOf(huesped.getFecha_registro()));
-                pstmt.execute();
+                pstmt.executeUpdate();
             }
     }
+
+    public void actualizar(Huesped huesped) throws SQLException{
+        String sql = "UPDATE huespedes SET nombre=?, email=?, telefono=?, documento =?, fecha_registro=? WHERE id_huesped=?";
+        try(Connection conn = ConexionBaseDatos.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
+                pstmt.setString(1, huesped.getNombre());
+                pstmt.setString(2, huesped.getEmail());
+                pstmt.setString(3, huesped.getTelefono());
+                pstmt.setString(4, huesped.getDocumento());
+                pstmt.setDate(5, java.sql.Date.valueOf(huesped.getFecha_registro()));
+                pstmt.setInt(6, huesped.getId_huesped());
+                pstmt.executeUpdate();
+            }
+    }
+
+    
 }
