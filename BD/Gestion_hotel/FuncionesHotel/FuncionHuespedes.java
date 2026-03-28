@@ -1,5 +1,6 @@
 package BD.Gestion_hotel.FuncionesHotel;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -32,5 +33,18 @@ public class FuncionHuespedes {
                 }
             }
         return huesped;
+    }
+
+    public void insertar(Huesped huesped) throws SQLException{
+        String sql = "INSERT INTO huespedes (nombre, email, telefono, documento, fecha_registro) VALUES (?, ? , ?, ?, ?)";
+        try(Connection conn = ConexionBaseDatos.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
+                pstmt.setString(1, huesped.getNombre());
+                pstmt.setString(2, huesped.getEmail());
+                pstmt.setString(3, huesped.getTelefono());
+                pstmt.setString(4, huesped.getDocumento());
+                pstmt.setDate(5, java.sql.Date.valueOf(huesped.getFecha_registro()));
+                pstmt.execute();
+            }
     }
 }
