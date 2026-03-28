@@ -93,4 +93,46 @@ public class FuncionHabitacion {
             }
         return null;
     }
+
+    public List<Habitacion> listarDisponiblesPorFechas(Date inicio, Date fin) throws SQLException {
+        List<Habitacion> habitacionesDisponibles = new ArrayList<>();
+        
+        String sql = "SELECT * FROM habitaciones h " +
+                    "WHERE h.id_habitacion NOT IN ( " +
+                    "    SELECT rh.id_habitacion " +
+                    "    FROM reservas_has_habitaciones rh " +
+                    "    INNER JOIN reservas r ON rh.id_reserva = r.id_reserva " +
+                    "    WHERE r.estado != 'cancelada' " +
+                    "    AND r.fecha_inicio < ? " +
+                    "    AND r.fecha_fin > ? " +
+                    ") " +
+                    "AND h.estado = 'disponible'";
+        
+        try (Connection conn = ConexionBaseDatos.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            // Convertir java.util.Date a java.sql.Date
+            java.sql.Date sqlFechaInicio = new java.sql.Date(inicio.getTime());
+            java.sql.Date sqlFechaFin = new java.sql.Date(fin.getTime());
+            
+            pstmt.setDate(1, sqlFechaFin);    // fecha_inicio < fecha_fin_buscada
+            pstmt.setDate(2, sqlFechaInicio); // fecha_fin > fecha_inicio_buscada
+            
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    Habitacion h = new Habitacion(
+                        rs.getInt("id_habitacion"),
+                        rs.getString("numero"),
+                        TipoHabitacion.fromString(rs.getString("tipo")),
+                        rs.getDouble("precio_noche"),
+                        rs.getInt("capacidad"),
+                        EstadoHabitacion.fromString(rs.getString("estado"))
+                    );
+                    habitacionesDisponibles.add(h);
+                }
+            }
+        }
+        
+        return habitacionesDisponibles;
+    }
 }
