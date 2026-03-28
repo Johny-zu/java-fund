@@ -63,5 +63,15 @@ public class FuncionHuespedes {
             }
     }
 
-    
+    public void eliminarPorID(int id) throws SQLException{
+        String sql = "DELETE FROM huespedes WHERE id_huesped=?";
+        try(Connection conn = ConexionBaseDatos.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
+                pstmt.setInt(1, id);{
+                    int filaAfectada = pstmt.executeUpdate();
+                    if (filaAfectada > 0) System.out.println("Huesped eliminado con exito");
+                    else System.out.println("No se hallo al huesped");
+                }
+            }
+    }
 }
