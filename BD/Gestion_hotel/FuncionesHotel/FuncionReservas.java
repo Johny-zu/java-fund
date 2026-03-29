@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import BD.Gestion_hotel.ConexionBaseDatos;
 import BD.Gestion_hotel.Modelo.Estado;
+import BD.Gestion_hotel.Modelo.Huesped;
 import BD.Gestion_hotel.Modelo.Reservas;
 
 public class FuncionReservas {
@@ -68,6 +69,35 @@ public class FuncionReservas {
             }
         }
         return listaEstados;
+    }
+
+    public List<Reservas> enlistarPorHuesped(Huesped huesped) throws SQLException{
+        List<Reservas> listaHuespedes = new ArrayList<>();
+        String sql = "SELECT * FROM reservas WHERE id_huesped=?";
+        try(Connection conn = ConexionBaseDatos.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)){  
+            pstmt.setInt(1, huesped.getId_huesped());  
+            try(ResultSet rs = pstmt.executeQuery()){  
+                while (rs.next()) {
+                    java.sql.Date sqlDateInicio = rs.getDate("fecha_inicio");
+                    LocalDate fechaInicio = sqlDateInicio.toLocalDate();
+                    java.sql.Date sqlDateFin = rs.getDate("fecha_fin");
+                    LocalDate fechaFin = sqlDateFin.toLocalDate();
+                    java.sql.Timestamp sqlDateReserva = rs.getTimestamp("fecha_reserva");
+                    LocalDateTime fechaReserva = sqlDateReserva.toLocalDateTime();
+                    Reservas r = new Reservas(
+                        rs.getInt("id_reserva"),
+                        fechaInicio,
+                        fechaFin,
+                        fechaReserva,
+                        Estado.fromString(rs.getString("estado")),
+                        rs.getDouble("total")
+                    );
+                    listaHuespedes.add(r);
+                }
+            }
+        }
+        return listaHuespedes;
     }
 
     public void insertar(Reservas reservas) throws SQLException{
