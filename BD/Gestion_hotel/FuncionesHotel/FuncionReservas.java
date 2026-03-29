@@ -41,6 +41,35 @@ public class FuncionReservas {
         return listadoReservas;
     }
 
+    public List<Reservas> enlistarPorEstado(String estado) throws SQLException{
+        List<Reservas> listaEstados = new ArrayList<>();
+        String sql = "SELECT * FROM reservas WHERE estado=?";
+        try(Connection conn = ConexionBaseDatos.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)){  
+            pstmt.setString(1, estado);  
+            try(ResultSet rs = pstmt.executeQuery()){  
+                while (rs.next()) {
+                    java.sql.Date sqlDateInicio = rs.getDate("fecha_inicio");
+                    LocalDate fechaInicio = sqlDateInicio.toLocalDate();
+                    java.sql.Date sqlDateFin = rs.getDate("fecha_fin");
+                    LocalDate fechaFin = sqlDateFin.toLocalDate();
+                    java.sql.Timestamp sqlDateReserva = rs.getTimestamp("fecha_reserva");
+                    LocalDateTime fechaReserva = sqlDateReserva.toLocalDateTime();
+                    Reservas r = new Reservas(
+                        rs.getInt("id_reserva"),
+                        fechaInicio,
+                        fechaFin,
+                        fechaReserva,
+                        Estado.fromString(rs.getString("estado")),
+                        rs.getDouble("total")
+                    );
+                    listaEstados.add(r);
+                }
+            }
+        }
+        return listaEstados;
+    }
+
     public void insertar(Reservas reservas) throws SQLException{
         String sql = "INSERT INTO reservas (id_huesped, fecha_inicio, fecha_fin, fecha_reserva, estado, total) VALUES (?, ?, ?, ?, ?, ?)";
         try(Connection conn = ConexionBaseDatos.getConnection();
@@ -56,18 +85,18 @@ public class FuncionReservas {
         }
     }
 
-public void actualizar(Reservas reservas) throws SQLException{
-    String sql = "UPDATE reservas SET id_huesped=?, fecha_inicio=?, fecha_fin=?, fecha_reserva=?, estado=?, total=? WHERE id_reserva=?";
-    try(Connection conn = ConexionBaseDatos.getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(sql)){
-            pstmt.setInt(1, reservas.getHuesped().getId_huesped());
-            pstmt.setDate(2, java.sql.Date.valueOf(reservas.getFecha_inicio()));
-            pstmt.setDate(3, java.sql.Date.valueOf(reservas.getFecha_fin()));
-            pstmt.setTimestamp(4, java.sql.Timestamp.valueOf(reservas.getFecha_reserva()));
-            pstmt.setString(5, reservas.getEstado().getValor());
-            pstmt.setDouble(6, reservas.getTotal());
-            pstmt.setInt(7, reservas.getId_reserva());  
-            
-            pstmt.executeUpdate();
+    public void actualizar(Reservas reservas) throws SQLException{
+        String sql = "UPDATE reservas SET id_huesped=?, fecha_inicio=?, fecha_fin=?, fecha_reserva=?, estado=?, total=? WHERE id_reserva=?";
+        try(Connection conn = ConexionBaseDatos.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
+                pstmt.setInt(1, reservas.getHuesped().getId_huesped());
+                pstmt.setDate(2, java.sql.Date.valueOf(reservas.getFecha_inicio()));
+                pstmt.setDate(3, java.sql.Date.valueOf(reservas.getFecha_fin()));
+                pstmt.setTimestamp(4, java.sql.Timestamp.valueOf(reservas.getFecha_reserva()));
+                pstmt.setString(5, reservas.getEstado().getValor());
+                pstmt.setDouble(6, reservas.getTotal());
+                pstmt.setInt(7, reservas.getId_reserva());  
+                pstmt.executeUpdate();
+        }
     }
-}}
+}
