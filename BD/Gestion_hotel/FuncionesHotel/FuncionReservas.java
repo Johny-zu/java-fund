@@ -163,4 +163,18 @@ public class FuncionReservas {
                 pstmt.executeUpdate();
         }
     }
+
+    public void eliminarPorID(int id) throws SQLException{
+        String sql = "DELETE FROM reservas WHERE id_huesped=?";
+        try(Connection conn = ConexionBaseDatos.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
+                pstmt.setInt(1, id);
+                int filaAfectada = pstmt.executeUpdate();
+                if (filaAfectada > 0) {
+                    System.out.println("Reserva eliminada con exito");
+                } else {
+                    System.out.println("No se hallo la reserva ingresada");
+                }
+            }
+    }
 }
