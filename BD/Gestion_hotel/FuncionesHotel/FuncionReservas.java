@@ -100,6 +100,40 @@ public class FuncionReservas {
         return listaHuespedes;
     }
 
+    public List<Reservas> enlistarPorFechas(LocalDate fecha_inicio, LocalDate fecha_fin) throws SQLException {
+        List<Reservas> listadoPorFechas = new ArrayList<>();
+        String sql = "SELECT * FROM reservas WHERE fecha_inicio >= ? AND fecha_fin <= ?";
+        try (Connection conn = ConexionBaseDatos.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                java.sql.Date sqlFechaInicio = java.sql.Date.valueOf(fecha_inicio);
+                java.sql.Date sqlFechaFin = java.sql.Date.valueOf(fecha_fin);
+                
+                pstmt.setDate(1, sqlFechaInicio);
+                pstmt.setDate(2, sqlFechaFin);
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    while (rs.next()) {
+                        java.sql.Date sqlDateInicio = rs.getDate("fecha_inicio");
+                        LocalDate fechaInicio = sqlDateInicio.toLocalDate();
+                        java.sql.Date sqlDateFin = rs.getDate("fecha_fin");
+                        LocalDate fechaFin = sqlDateFin.toLocalDate();
+                        java.sql.Timestamp sqlDateReserva = rs.getTimestamp("fecha_reserva");
+                        LocalDateTime fechaReserva = sqlDateReserva.toLocalDateTime();
+
+                        Reservas r = new Reservas(
+                            rs.getInt("id_reserva"),
+                            fechaInicio,
+                            fechaFin,
+                            fechaReserva,
+                            Estado.fromString(rs.getString("estado")),
+                            rs.getDouble("total")
+                        );
+                        listadoPorFechas.add(r);
+                    }
+                }
+            }
+        return listadoPorFechas;
+    }
+
     public void insertar(Reservas reservas) throws SQLException{
         String sql = "INSERT INTO reservas (id_huesped, fecha_inicio, fecha_fin, fecha_reserva, estado, total) VALUES (?, ?, ?, ?, ?, ?)";
         try(Connection conn = ConexionBaseDatos.getConnection();
