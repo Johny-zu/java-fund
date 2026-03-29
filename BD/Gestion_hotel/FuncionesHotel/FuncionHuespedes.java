@@ -94,7 +94,52 @@ public class FuncionHuespedes {
                     );
                 }
             }
-        
+        return null;
+    }
+
+    public List<Huesped> buscarPorNombre(String nombre) throws SQLException{
+        List<Huesped> huespedes = new ArrayList<>();
+        String sql = "SELECT * FROM huespedes WHERE nombre=?";
+        try(Connection conn = ConexionBaseDatos.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
+                pstmt.setString(1, nombre);
+                ResultSet rs = pstmt.executeQuery();
+                while (rs.next()) {  
+                    java.sql.Date sqlDate = rs.getDate("fecha_registro");
+                    LocalDate fechaRegistro = sqlDate.toLocalDate();
+                    Huesped h = new Huesped(
+                        rs.getInt("id_huesped"),
+                        rs.getString("nombre"),
+                        rs.getString("email"),
+                        rs.getString("telefono"),
+                        rs.getString("documento"),
+                        fechaRegistro
+                    );
+                    huespedes.add(h); 
+                }
+            }
+        return huespedes;  
+    }
+
+    public Huesped buscarPorDocumento(String documento) throws SQLException{
+        String sql = "SELECT * FROM huespedes WHERE documento=?";
+        try(Connection conn = ConexionBaseDatos.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
+                pstmt.setString(1, documento);
+                ResultSet rs = pstmt.executeQuery();
+                if (rs.next()) {
+                    java.sql.Date sqlDate = rs.getDate("fecha_registro");
+                    LocalDate fechaRegistro = sqlDate.toLocalDate();
+                    return new Huesped(
+                        rs.getInt("id_huesped"),
+                        rs.getString("nombre"),
+                        rs.getString("email"),
+                        rs.getString("telefono"),
+                        rs.getString("documento"),
+                        fechaRegistro
+                    );
+                }
+            }
         return null;
     }
 }
