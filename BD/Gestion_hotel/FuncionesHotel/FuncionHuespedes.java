@@ -74,4 +74,27 @@ public class FuncionHuespedes {
                 }
             }
     }
+
+    public Huesped buscarPorID(int id) throws SQLException{
+        String sql = "SELECT * FROM huespedes WHERE id_huesped=?";
+        try(Connection conn = ConexionBaseDatos.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
+                pstmt.setInt(1, id);
+                ResultSet rs = pstmt.executeQuery();
+                if (rs.next()) {
+                    java.sql.Date sqlDate = rs.getDate("fecha_registro");
+                    LocalDate fechaRegistro = sqlDate.toLocalDate();
+                    return new Huesped(
+                        rs.getInt("id_huesped"),
+                        rs.getString("nombre"),
+                        rs.getString("email"),
+                        rs.getString("telefono"),
+                        rs.getString("documento"),
+                        fechaRegistro
+                    );
+                }
+            }
+        
+        return null;
+    }
 }
