@@ -1,5 +1,6 @@
 package BD.Gestion_hotel.FuncionesHotel;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -25,7 +26,7 @@ public class FuncionReservas {
                     LocalDate fechaFin = sqlDateFin.toLocalDate();
                     java.sql.Timestamp  sqlDateReserva = rs.getTimestamp("fecha_reserva");
                     LocalDateTime fechaReserva = sqlDateReserva.toLocalDateTime();
-                        
+
                     Reservas r = new Reservas(
                         rs.getInt("id_reserva"),
                         fechaInicio,
@@ -38,5 +39,20 @@ public class FuncionReservas {
                 }
             }
         return listadoReservas;
+    }
+
+    public void insertar(Reservas reservas) throws SQLException{
+        String sql = "INSERT INTO reservas (id_huesped, fecha_inicio, fecha_fin, fecha_reserva, estado, total) VALUES (?, ?, ?, ?, ?, ?)";
+        try(Connection conn = ConexionBaseDatos.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
+                pstmt.setInt(1, reservas.getHuesped().getId_huesped());
+                pstmt.setDate(2, java.sql.Date.valueOf(reservas.getFecha_inicio()));
+                pstmt.setDate(3, java.sql.Date.valueOf(reservas.getFecha_fin()));
+                pstmt.setTimestamp(4, java.sql.Timestamp.valueOf(reservas.getFecha_reserva()));
+                pstmt.setString(5, reservas.getEstado().getValor());
+                pstmt.setDouble(6, reservas.getTotal());
+                
+                pstmt.executeUpdate();
+        }
     }
 }
