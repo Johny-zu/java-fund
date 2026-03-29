@@ -1,5 +1,4 @@
 package BD.Gestion_hotel.FuncionesHotel;
-import java.net.ConnectException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
