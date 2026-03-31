@@ -164,17 +164,31 @@ public class FuncionReservas {
         }
     }
 
-    public void eliminarPorID(int id) throws SQLException{
-        String sql = "DELETE FROM reservas WHERE id_huesped=?";
-        try(Connection conn = ConexionBaseDatos.getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(sql)){
-                pstmt.setInt(1, id);
-                int filaAfectada = pstmt.executeUpdate();
-                if (filaAfectada > 0) {
-                    System.out.println("Reserva eliminada con exito");
-                } else {
-                    System.out.println("No se hallo la reserva ingresada");
+    public void eliminarPorID(int id) throws SQLException {
+        // Primero verificar si el huésped tiene reservas
+        String sqlVerificar = "SELECT COUNT(*) FROM reservas WHERE id_huesped = ?";
+        String sqlEliminar = "DELETE FROM huespedes WHERE id_huesped = ?";
+        try (Connection conn = ConexionBaseDatos.getConnection()) {
+            // Verificar reservas existentes
+            try (PreparedStatement pstmtVerificar = conn.prepareStatement(sqlVerificar)) {
+                pstmtVerificar.setInt(1, id);
+                try (ResultSet rs = pstmtVerificar.executeQuery()) {
+                    if (rs.next() && rs.getInt(1) > 0) {
+                        System.out.println("No se puede eliminar el huésped porque tiene reservas asociadas.");
+                        return;
+                    }
                 }
             }
+            // Si no tiene reservas, proceder a eliminar
+            try (PreparedStatement pstmtEliminar = conn.prepareStatement(sqlEliminar)) {
+                pstmtEliminar.setInt(1, id);
+                int filaAfectada = pstmtEliminar.executeUpdate();
+                if (filaAfectada > 0) {
+                    System.out.println("Huésped eliminado con éxito");
+                } else {
+                    System.out.println("No se halló al huésped");
+                }
+            }
+        }
     }
 }
