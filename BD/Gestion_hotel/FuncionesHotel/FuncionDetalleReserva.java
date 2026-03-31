@@ -28,4 +28,15 @@ public class FuncionDetalleReserva {
             }
         return detalles;
     }
+
+    public void insertar(ReservasHasHabitaciones detalle) throws SQLException {
+        String sql = "INSERT INTO reservas_has_habitaciones (id_reserva, id_habitacion, precio_noche_aplicado) VALUES (?, ?, ?)";
+        try (Connection conn = ConexionBaseDatos.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, detalle.getReserva().getId_reserva());
+            pstmt.setInt(2, detalle.getHabitacion().getId_habitacion());
+            pstmt.setDouble(3, detalle.getPrecioNocheAplicado());
+            pstmt.executeUpdate();
+        }
+    }
 }
