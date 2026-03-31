@@ -39,4 +39,13 @@ public class FuncionDetalleReserva {
             pstmt.executeUpdate();
         }
     }
+
+    public void eliminarPorReserva(int id) throws SQLException{
+        String sql = "DELETE FROM reservas_has_habitaciones WHERE id_reserva=?";
+        try(Connection conn = ConexionBaseDatos.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
+                pstmt.setInt(1, id);
+                pstmt.executeUpdate();
+            }
+    }
 }
