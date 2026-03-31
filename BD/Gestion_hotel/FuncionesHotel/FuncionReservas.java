@@ -191,4 +191,54 @@ public class FuncionReservas {
             }
         }
     }
+    
+    public Reservas buscarPorID(int id) throws SQLException {
+        String sql = "SELECT * FROM reservas WHERE id_reserva=?";
+        try (Connection conn = ConexionBaseDatos.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    java.sql.Date sqlDateInicio = rs.getDate("fecha_inicio");
+                    LocalDate fechaInicio = sqlDateInicio.toLocalDate();
+                    java.sql.Date sqlDateFin = rs.getDate("fecha_fin");
+                    LocalDate fechaFin = sqlDateFin.toLocalDate();
+                    java.sql.Timestamp sqlDateReserva = rs.getTimestamp("fecha_reserva");
+                    LocalDateTime fechaReserva = sqlDateReserva.toLocalDateTime();
+                    
+                    return new Reservas(
+                        rs.getInt("id_reserva"),
+                        fechaInicio,
+                        fechaFin,
+                        fechaReserva,
+                        Estado.fromString(rs.getString("estado")),
+                        rs.getDouble("total")
+                    );
+                }
+            }
+        }
+        return null;
+    }
+    
+    public double calcularTotal(int id) throws SQLException {
+        double total = 0;
+        Reservas reserva = buscarPorID(id);
+        if (reserva == null) {
+            return 0;
+        }
+
+        int dias = reserva.getDiasEstancia();        
+        String sql = "SELECT precio_noche_aplicado FROM reservas_has_habitaciones WHERE id_reserva=?";
+        try (Connection conn = ConexionBaseDatos.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    double precioNoche = rs.getDouble("precio_noche_aplicado");
+                    total += precioNoche * dias;
+                }
+            }
+        }
+        return total;
+    }
 }
