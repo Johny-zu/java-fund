@@ -46,4 +46,19 @@ public class FuncionPago {
             pstmt.executeUpdate();
         }
     }
+
+    public double sumarPagosPorReserva(int id) throws SQLException {
+        double totalPagado = 0;
+        String sql = "SELECT SUM(monto) as total FROM pagos WHERE id_reserva = ?";
+        try (Connection conn = ConexionBaseDatos.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    totalPagado = rs.getDouble("total");
+                }
+            }
+        }
+        return totalPagado;
+    }
 }
