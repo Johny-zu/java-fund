@@ -4,6 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import BD.Gestion_hotel.ConexionBaseDatos;
 import BD.Gestion_hotel.Modelo.Pagos;
@@ -29,6 +31,19 @@ public class FuncionPago {
                     System.out.println(pago);
                 }
             }
+        }
+    }
+
+    public void insertar(Pagos pago) throws SQLException {
+        String sql = "INSERT INTO pagos (id_reserva, monto, fecha_pago, metodo, referencia) VALUES (?, ?, ?, ?, ?)";
+        try (Connection conn = ConexionBaseDatos.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, pago.getReservas().getId_reserva());
+            pstmt.setDouble(2, pago.getMonto());
+            pstmt.setTimestamp(3, java.sql.Timestamp.valueOf(pago.getFecha_pago()));
+            pstmt.setString(4, pago.getMetodo().getValor());
+            pstmt.setString(5, pago.getReferencia());
+            pstmt.executeUpdate();
         }
     }
 }
