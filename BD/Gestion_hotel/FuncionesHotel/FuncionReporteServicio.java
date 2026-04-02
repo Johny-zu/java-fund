@@ -5,12 +5,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import BD.Gestion_hotel.ConexionBaseDatos;
 import BD.Gestion_hotel.Modelo.EstadoHabitacion;
 import BD.Gestion_hotel.Modelo.Habitacion;
+import BD.Gestion_hotel.Modelo.Huesped;
 import BD.Gestion_hotel.Modelo.TipoHabitacion;
 
 public class FuncionReporteServicio {
@@ -100,5 +102,34 @@ public class FuncionReporteServicio {
             }
         }
         return habitaciones;
+    }
+
+    public List<Huesped> obtenerHuespedesFrecuentes() throws SQLException {
+        List<Huesped> huespedes = new ArrayList<>();
+        String sql = "SELECT hu.id_huesped, hu.nombre, hu.email, hu.telefono, hu.documento, hu.fecha_registro, " +
+                    "COUNT(r.id_reserva) as total_reservas " +
+                    "FROM huespedes hu " +
+                    "INNER JOIN reservas r ON hu.id_huesped = r.id_huesped " +
+                    "GROUP BY hu.id_huesped " +
+                    "ORDER BY total_reservas DESC " +
+                    "LIMIT 5";
+        try (Connection conn = ConexionBaseDatos.getConnection();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                java.sql.Date sqlDate = rs.getDate("fecha_registro");
+                LocalDate fechaRegistro = sqlDate.toLocalDate();
+                Huesped h = new Huesped(
+                    rs.getInt("id_huesped"),
+                    rs.getString("nombre"),
+                    rs.getString("email"),
+                    rs.getString("telefono"),
+                    rs.getString("documento"),
+                    fechaRegistro
+                );
+                huespedes.add(h);
+            }
+        }
+        return huespedes;
     }
 }
