@@ -47,4 +47,23 @@ public class FuncionReporteServicio {
         }
         return porcentaje;
     }
+
+    public double obtenerIngresosPorPeriodo(Date inicio, Date fin) throws SQLException{
+        double totalIngresos = 0.0;
+        String sql = "SELECT SUM(monto) as total FROM pagos WHERE fecha_pago BETWEEN ? AND ?";
+        try(Connection conn = ConexionBaseDatos.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
+                java.sql.Date sqlinicio = new java.sql.Date(inicio.getTime());
+                java.sql.Date sqlfin = new java.sql.Date(fin.getTime());
+                pstmt.setDate(1, sqlinicio);
+                pstmt.setDate(2, sqlfin);
+
+                try(ResultSet rs = pstmt.executeQuery()){
+                    if (rs.next()) {
+                        totalIngresos = rs.getDouble("total");
+                    }
+                }
+        }
+        return totalIngresos;
+    }
 }
