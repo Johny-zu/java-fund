@@ -6,13 +6,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import BD.Gestion_hotel.ConexionBaseDatos;
+import BD.Gestion_hotel.Modelo.Estado;
 import BD.Gestion_hotel.Modelo.EstadoHabitacion;
 import BD.Gestion_hotel.Modelo.Habitacion;
 import BD.Gestion_hotel.Modelo.Huesped;
+import BD.Gestion_hotel.Modelo.Reservas;
 import BD.Gestion_hotel.Modelo.TipoHabitacion;
 
 public class FuncionReporteServicio {
@@ -131,5 +134,41 @@ public class FuncionReporteServicio {
             }
         }
         return huespedes;
+    }
+
+    public List<Reservas> obtenerReservasActivasHoy() throws SQLException {
+        List<Reservas> reservasActivas = new ArrayList<>();
+        LocalDate hoy = LocalDate.now();
+        String sql = "SELECT * FROM reservas WHERE fecha_inicio <= ? AND fecha_fin >= ? AND estado != 'cancelada'";
+        
+        try (Connection conn = ConexionBaseDatos.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            java.sql.Date sqlHoy = java.sql.Date.valueOf(hoy);
+            pstmt.setDate(1, sqlHoy);
+            pstmt.setDate(2, sqlHoy);
+            
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    java.sql.Date sqlDateInicio = rs.getDate("fecha_inicio");
+                    LocalDate fechaInicio = sqlDateInicio.toLocalDate();
+                    java.sql.Date sqlDateFin = rs.getDate("fecha_fin");
+                    LocalDate fechaFin = sqlDateFin.toLocalDate();
+                    java.sql.Timestamp sqlDateReserva = rs.getTimestamp("fecha_reserva");
+                    LocalDateTime fechaReserva = sqlDateReserva.toLocalDateTime();
+                    
+                    Reservas r = new Reservas(
+                        rs.getInt("id_reserva"),
+                        fechaInicio,
+                        fechaFin,
+                        fechaReserva,
+                        Estado.fromString(rs.getString("estado")),
+                        rs.getDouble("total")
+                    );
+                    reservasActivas.add(r);
+                }
+            }
+        }
+        return reservasActivas;
     }
 }
