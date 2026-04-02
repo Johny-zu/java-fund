@@ -5,7 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
 import BD.Gestion_hotel.ConexionBaseDatos;
+import BD.Gestion_hotel.Modelo.EstadoHabitacion;
+import BD.Gestion_hotel.Modelo.Habitacion;
+import BD.Gestion_hotel.Modelo.TipoHabitacion;
 
 public class FuncionReporteServicio {
     public double obtenerOcupacionPorFecha(Date fecha) throws SQLException{
@@ -65,5 +71,34 @@ public class FuncionReporteServicio {
                 }
         }
         return totalIngresos;
+    }
+
+    public List<Habitacion> obtenerHabitacionesMasReservadas() throws SQLException {
+        List<Habitacion> habitaciones = new ArrayList<>();
+        String sql = "SELECT h.id_habitacion, h.numero, h.tipo, h.precio_noche, h.capacidad, h.estado, " +
+                    "COUNT(rh.id_habitacion) as total_reservas " +
+                    "FROM habitaciones h " +
+                    "INNER JOIN reservas_has_habitaciones rh ON h.id_habitacion = rh.id_habitacion " +
+                    "GROUP BY h.id_habitacion " +
+                    "ORDER BY total_reservas DESC " +
+                    "LIMIT 5";
+        
+        try (Connection conn = ConexionBaseDatos.getConnection();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql)) {
+            
+            while (rs.next()) {
+                Habitacion h = new Habitacion(
+                    rs.getInt("id_habitacion"),
+                    rs.getString("numero"),
+                    TipoHabitacion.fromString(rs.getString("tipo")),
+                    rs.getDouble("precio_noche"),
+                    rs.getInt("capacidad"),
+                    EstadoHabitacion.fromString(rs.getString("estado"))
+                );
+                habitaciones.add(h);
+            }
+        }
+        return habitaciones;
     }
 }
