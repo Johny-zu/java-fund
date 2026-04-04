@@ -25,6 +25,15 @@ public class Pagos {
         this.referencia = referencia;
     }
 
+    public Pagos(int id_pago, Reservas reservas, double monto, LocalDateTime fecha_pago, Metodo metodo, String referencia){
+        this.id_pago = id_pago;
+        this.reservas = reservas; 
+        this.monto = monto;
+        this.fecha_pago = fecha_pago;
+        this.metodo = metodo;
+        this.referencia = referencia;
+    }
+
     public int getId_pago(){
         return id_pago;
     }
