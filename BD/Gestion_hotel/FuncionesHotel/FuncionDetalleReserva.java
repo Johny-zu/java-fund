@@ -11,25 +11,26 @@ import BD.Gestion_hotel.Modelo.Reservas;
 import BD.Gestion_hotel.Modelo.ReservasHasHabitaciones;
 
 public class FuncionDetalleReserva {
-    public List<ReservasHasHabitaciones> listarPorReserva(int id) throws SQLException{
+    public List<ReservasHasHabitaciones> listarPorReserva(int id) throws SQLException {
         List<ReservasHasHabitaciones> detalles = new ArrayList<>();
-        String sql = "SELECT * FROM Reservas_has_Habitaciones WHERE id_reservas=?";
-        try(Connection conn = ConexionBaseDatos.getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(sql)){
-                pstmt.setInt(1, id);
-                try(ResultSet rs = pstmt.executeQuery()){
+        String sql = "SELECT * FROM reservas_has_habitaciones WHERE id_reserva = ?";
+        try (Connection conn = ConexionBaseDatos.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) { 
                     Reservas reserva = new FuncionReservas().buscarPorID(rs.getInt("id_reserva"));
-                    Habitacion habitacion = new FuncionHabitacion().buscarID(rs.getInt("id_habitacion"));
-                    while (rs.next()) {
-                        ReservasHasHabitaciones detalle = new ReservasHasHabitaciones(
-                            reserva,
-                            habitacion,
-                            rs.getDouble("Precio_noche_aplicado")
-                        );
-                        detalles.add(detalle);
-                    }
+                    Habitacion habitacion = new FuncionHabitacion().buscarID(rs.getInt("id_habitacion")); 
+                    ReservasHasHabitaciones detalle = new ReservasHasHabitaciones(
+                        rs.getInt("id"), 
+                        reserva,
+                        habitacion,
+                        rs.getDouble("precio_noche_aplicado")
+                    );
+                    detalles.add(detalle);
                 }
             }
+        }
         return detalles;
     }
 
