@@ -24,3 +24,10 @@ Dentro de este encarpetado se hallaran las clases con funciones para hacer traba
 - FuncionesHuesped
 - FuncionesReservas
 - FuncionesPagos
+- FuncionReporteServicio
+- FuncionDetalleReserva
+
+## Carpeta raiz
+Carpeta donde vendra todo el contenido base y el index main para trabajar todo el back creado con el fin del hacer el consumo de las funciones y modelos generados para la clase
+- Conexion base de datos
+- Main
