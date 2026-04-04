@@ -166,8 +166,8 @@ public class FuncionReservas {
 
     public void eliminarPorID(int id) throws SQLException {
         // Primero verificar si el huésped tiene reservas
-        String sqlVerificar = "SELECT COUNT(*) FROM reservas WHERE id_huesped = ?";
-        String sqlEliminar = "DELETE FROM huespedes WHERE id_huesped = ?";
+        String sqlVerificar = "SELECT COUNT(*) FROM reservas WHERE id_reserva = ?";
+        String sqlEliminar = "DELETE FROM huespedes WHERE id_reserva = ?";
         try (Connection conn = ConexionBaseDatos.getConnection()) {
             // Verificar reservas existentes
             try (PreparedStatement pstmtVerificar = conn.prepareStatement(sqlVerificar)) {
