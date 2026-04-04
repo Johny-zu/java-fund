@@ -47,10 +47,13 @@ public class ReservasHasHabitaciones {
     }
     
     public void setHabitacion(Habitacion habitacion) {
-        if (habitacion == null) {
-            throw new IllegalArgumentException("La habitación no puede ser nula");
+        if (habitacion == null) throw new IllegalArgumentException("La habitación no puede ser nula");
+        // Remover de la habitación anterior (si existe)
+        if (this.habitacion != null) {
+            this.habitacion.getReservas().remove(this);
         }
         this.habitacion = habitacion;
+        this.habitacion.getReservas().add(this);
     }
     
     public double getPrecioNocheAplicado() {
