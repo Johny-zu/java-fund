@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import BD.Gestion_hotel.ConexionBaseDatos;
+import BD.Gestion_hotel.Modelo.Habitacion;
+import BD.Gestion_hotel.Modelo.Reservas;
 import BD.Gestion_hotel.Modelo.ReservasHasHabitaciones;
 
 public class FuncionDetalleReserva {
@@ -16,10 +18,12 @@ public class FuncionDetalleReserva {
             PreparedStatement pstmt = conn.prepareStatement(sql)){
                 pstmt.setInt(1, id);
                 try(ResultSet rs = pstmt.executeQuery()){
+                    Reservas reserva = new FuncionReservas().buscarPorID(rs.getInt("id_reserva"));
+                    Habitacion habitacion = new FuncionHabitacion().buscarID(rs.getInt("id_habitacion"));
                     while (rs.next()) {
                         ReservasHasHabitaciones detalle = new ReservasHasHabitaciones(
-                            null,
-                            null,
+                            reserva,
+                            habitacion,
                             rs.getDouble("Precio_noche_aplicado")
                         );
                         detalles.add(detalle);
