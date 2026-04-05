@@ -220,7 +220,14 @@ public class GestionHotelera {
                             }
                         break;
                         case 4: //Buscar huésped por nombre
-                            break;
+                            if (!FunHues.hayRegistros()) {
+                                System.out.println("No hay datos por mostrar");
+                            } else {
+                                System.out.printf("Ingresa el nombre del huesped a buscar: ");
+                                String buscarNombre = sc.nextLine();
+                                System.out.println(FunHues.buscarPorNombre(buscarNombre));
+                            }
+                        break;
                         case 5: // Buscar huésped por documento
                             break;
                         case 6: // Actualizar datos de huésped
