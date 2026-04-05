@@ -177,7 +177,7 @@ public class GestionHotelera {
                         break;
                         case 7: System.out.println("Saliendo del modulo de habitaciones...");
                             break;
-                        default:
+                        default: System.out.println("opcion invalida");
                             break;
                     }
                 } while (m1 != 7); 
@@ -276,7 +276,7 @@ public class GestionHotelera {
                         break;
                         case 8: System.out.println("Saliendo del modulo de huespedes...");
                             break;
-                        default:
+                        default: System.out.println("opcion invalida");
                             break;
                     }
                 } while (m2 != 8); 
@@ -299,7 +299,7 @@ public class GestionHotelera {
                             break;
                         case 7: System.out.println("Saliendo del modulo de reservas...");
                             break;
-                        default:
+                        default: System.out.println("opcion invalida");
                             break;
                     }
                 } while (m3 != 7); 
@@ -316,7 +316,7 @@ public class GestionHotelera {
                             break;
                         case 4: System.out.println("Saliendo del modulo de pagos...");
                             break;
-                        default:
+                        default: System.out.println("opcion invalida");
                             break;
                     }
                 } while (m4 != 4); 
@@ -337,7 +337,7 @@ public class GestionHotelera {
                             break;
                         case 6: System.out.println("Saliendo del modulo de reportes...");
                             break;
-                        default:
+                        default: System.out.println("opcion invalida");
                             break;
                     }
                 } while (m5 != 6); 
