@@ -265,7 +265,22 @@ public class GestionHotelera {
                             }
                         break;
                         case 7: // Eliminar huésped
-                            break;
+                            if (!FunHues.hayRegistros()) {
+                                System.out.println("No hay datos por mostrar");
+                            } else{
+                                System.out.printf("Ingresa el ID del huesped a eliminar: ");
+                                int id_para_borrar = sc.nextInt();
+                                sc.nextLine();
+                                Huesped busquedaHuesped = FunHues.buscarPorID(id_para_borrar);
+                                if (busquedaHuesped == null) {
+                                    System.out.println("No se hallo algun huesped con ese ID");
+                                    break;
+                                } else {
+                                    FunHues.eliminarPorID(id_para_borrar);
+                                    System.out.println("Huesped eliminado correctamente");
+                                }
+                            }
+                        break;
                         case 8: System.out.println("Saliendo del modulo de huespedes...");
                             break;
                         default:
