@@ -176,19 +176,19 @@ public class GestionHotelera {
                     System.out.printf(ModuloHuespedes);
                     m2 = sc.nextInt();
                     switch (m2) {
-                        case 1:
+                        case 1: // Registrar nuevo huésped
                             break;
-                        case 2:
+                        case 2: // Listar todos los huéspedes
                         break;
-                        case 3:
+                        case 3: // Buscar huésped por ID
                             break;
-                        case 4:
+                        case 4: //Buscar huésped por nombre
                             break;
-                        case 5:
+                        case 5: // Buscar huésped por documento
                             break;
-                        case 6:
+                        case 6: // Actualizar datos de huésped
                             break;
-                        case 7:
+                        case 7: // Eliminar huésped
                             break;
                         case 8: System.out.println("Saliendo del modulo de huespedes...");
                             break;

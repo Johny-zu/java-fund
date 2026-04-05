@@ -11,6 +11,18 @@ import BD.Gestion_hotel.ConexionBaseDatos;
 import BD.Gestion_hotel.Modelo.Huesped;
 
 public class FuncionHuespedes {
+    public boolean hayRegistros() throws SQLException {
+        String sql = "SELECT COUNT(*) FROM huespedes";
+        try (Connection conn = ConexionBaseDatos.getConnection();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql)) {
+            if (rs.next()) {
+                return rs.getInt(1) > 0; 
+            }
+        }
+        return false;
+    }
+    
     public List<Huesped> enlistarHuespedes()throws SQLException{
         List<Huesped> huesped = new ArrayList<>();
         String sql = "SELECT * FROM huespedes";
