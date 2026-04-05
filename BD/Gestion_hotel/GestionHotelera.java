@@ -229,7 +229,14 @@ public class GestionHotelera {
                             }
                         break;
                         case 5: // Buscar huésped por documento
-                            break;
+                            if (!FunHues.hayRegistros()) {
+                                System.out.println("No hay datos por mostrar");
+                            } else {
+                                System.out.printf("Ingresa la busqueda por tipo de documento: ");
+                                String buscarPorDocumento = sc.nextLine();
+                                System.out.println(FunHues.buscarPorDocumento(buscarPorDocumento));
+                            }
+                        break;
                         case 6: // Actualizar datos de huésped
                             break;
                         case 7: // Eliminar huésped
