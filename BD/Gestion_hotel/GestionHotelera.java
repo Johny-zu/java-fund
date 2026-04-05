@@ -238,7 +238,32 @@ public class GestionHotelera {
                             }
                         break;
                         case 6: // Actualizar datos de huésped
-                            break;
+                            if (!FunHues.hayRegistros()) {
+                                System.out.println("No hay datos por mostrar");
+                            } else{
+                                System.out.printf("Ingresa el ID del huesped a actualizar: ");
+                                int id_para_actualizar = sc.nextInt();
+                                sc.nextLine();
+                                Huesped busquedaHuesped = FunHues.buscarPorID(id_para_actualizar);
+                                if (busquedaHuesped == null) {
+                                    System.out.println("No se hallo algun huesped con ese ID");
+                                    break;
+                                } else {
+                                    System.out.printf("Ingrese nombre del huesped: ");
+                                    nombre = sc.nextLine();
+                                    System.out.printf("Ingrese el email del huesped: ");
+                                    email = sc.nextLine();
+                                    System.out.printf("Ingrese el telefono del huesped: ");
+                                    telefono = sc.nextLine();
+                                    System.out.printf("Ingresa el documento de validacion del huesped: ");
+                                    documento = sc.nextLine();
+                                    fecha_registro = LocalDate.now();
+                                    Huesped actualizarHuesped = new Huesped(id_para_actualizar, nombre, email, telefono, documento, fecha_registro);
+                                    FunHues.actualizar(actualizarHuesped);
+                                    System.out.println("Huesped actualizado con exito\n");    
+                                }
+                            }
+                        break;
                         case 7: // Eliminar huésped
                             break;
                         case 8: System.out.println("Saliendo del modulo de huespedes...");
