@@ -96,10 +96,11 @@ public class GestionHotelera {
                         estado = EstadoHabitacion.fromString(estadoStr);  
                         Habitacion nuevHabitacion = new Habitacion(numero, tipo, precio_noche, capacidad, estado);
                         FunHab.insertar(nuevHabitacion);
-                        System.out.printf("Nueva habitacion registrada");
+                        System.out.printf("Nueva habitacion registrada con exito\n");
                             break;
                         case 2: // Listar todas las habitaciones
-                        break;
+                        System.out.println(FunHab.enlistarHabitaciones());
+                            break;
                         case 3: //Buscar habitación por ID
                             break;
                         case 4: //Actualizar precio o estado
