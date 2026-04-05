@@ -139,8 +139,12 @@ public class GestionHotelera {
                             FunHab.actualizar(estadoHabitacionExistente);
                             System.out.println("Estado actualizado con éxito");
                         break;                        
-                        case 6: // Eliminar habitación
-                            break;
+                        case 6:
+                            System.out.printf("Ingresa el id a eliminar: ");
+                            int id_eliminar = sc.nextInt();
+                            sc.nextLine();
+                            FunHab.eliminarPorID(id_eliminar);    
+                        break;
                         case 7: System.out.println("Saliendo del modulo de habitaciones...");
                             break;
                         default:
