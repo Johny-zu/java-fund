@@ -1,10 +1,13 @@
 package BD.Gestion_hotel;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 import BD.Gestion_hotel.FuncionesHotel.FuncionHabitacion;
+import BD.Gestion_hotel.FuncionesHotel.FuncionHuespedes;
 import BD.Gestion_hotel.Modelo.EstadoHabitacion;
 import BD.Gestion_hotel.Modelo.Habitacion;
+import BD.Gestion_hotel.Modelo.Huesped;
 import BD.Gestion_hotel.Modelo.TipoHabitacion;
 
 public class GestionHotelera {
@@ -64,6 +67,19 @@ public class GestionHotelera {
                         "\nSeleccione una opcion: ";
         int opcion, m1, m2, m3, m4, m5;
         
+        //Global
+        String numero = "";
+        
+        // Habitacion
+        TipoHabitacion tipo;
+        double precio_noche;
+        int capacidad;
+        EstadoHabitacion estado;
+
+        // Huesped
+        String nombre, telefono, documento, email;
+        LocalDate fecha_registro;
+
         do {
             System.out.printf(menuPrincipal);
             opcion = sc.nextInt();
@@ -72,13 +88,7 @@ public class GestionHotelera {
                     System.out.printf(ModuloHabitaciones);
                     m1 = sc.nextInt();
                     sc.nextLine();
-
                     FuncionHabitacion FunHab = new FuncionHabitacion();                
-                    String numero;
-                    TipoHabitacion tipo;
-                    double precio_noche;
-                    int capacidad;
-                    EstadoHabitacion estado;
                     switch (m1) {
                         case 1: // Registrar nueva habitación
                             System.out.printf("Ingrese numero de habitacion: ");
@@ -175,8 +185,22 @@ public class GestionHotelera {
                 case 2: do {
                     System.out.printf(ModuloHuespedes);
                     m2 = sc.nextInt();
+                    sc.nextLine();
+                    FuncionHuespedes FunHues = new FuncionHuespedes();
                     switch (m2) {
                         case 1: // Registrar nuevo huésped
+                        System.out.printf("Ingrese nombre del huesped: ");
+                        nombre = sc.nextLine();
+                        System.out.printf("Ingrese el email del huesped: ");
+                        email = sc.nextLine();
+                        System.out.printf("Ingrese el telefono del huespes: ");
+                        telefono = sc.nextLine();
+                        System.out.printf("Ingresa el documento de validacion del usuario: ");
+                        documento = sc.nextLine();
+                        fecha_registro = LocalDate.now();
+                        Huesped nuevoHuesped = new Huesped(nombre, email, telefono, documento, fecha_registro);
+                        FunHues.insertar(nuevoHuesped);
+                        System.out.println("Huesped ingresado con exito\n");
                             break;
                         case 2: // Listar todos los huéspedes
                         break;
