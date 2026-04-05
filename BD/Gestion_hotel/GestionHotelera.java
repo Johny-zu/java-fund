@@ -102,6 +102,10 @@ public class GestionHotelera {
                         System.out.println(FunHab.enlistarHabitaciones());
                             break;
                         case 3: //Buscar habitación por ID
+                        int id;
+                        System.out.printf("Ingrese el numero de habitacion por buscar: ");
+                        id = sc.nextInt();
+                        System.out.println("\nDetalles de la habitacion: \n" + FunHab.buscarID(id));
                             break;
                         case 4: //Actualizar precio o estado
                             break;
