@@ -81,54 +81,64 @@ public class GestionHotelera {
                     EstadoHabitacion estado;
                     switch (m1) {
                         case 1: // Registrar nueva habitación
-                        System.out.printf("Ingrese numero de habitacion: ");
-                        numero = sc.nextLine();
-                        System.out.printf("Ingrese el tipo de la habitacion (individual/doble/suite): ");
-                        String tipoStr = sc.nextLine();
-                        tipo = TipoHabitacion.fromString(tipoStr); 
-                        System.out.printf("Ingrese el precio por noche: ");
-                        precio_noche = sc.nextDouble();
-                        sc.nextLine();
-                        System.out.print("Ingrese la capacidad: ");
-                        capacidad = sc.nextInt();
-                        sc.nextLine(); 
-                        System.out.printf("Ingrese el estado (disponible/mantenimiento): ");
-                        String estadoStr = sc.nextLine();
-                        estado = EstadoHabitacion.fromString(estadoStr);  
-                        Habitacion nuevHabitacion = new Habitacion(numero, tipo, precio_noche, capacidad, estado);
-                        FunHab.insertar(nuevHabitacion);
-                        System.out.printf("Nueva habitacion registrada con exito\n");
-                            break;
+                            System.out.printf("Ingrese numero de habitacion: ");
+                            numero = sc.nextLine();
+                            System.out.printf("Ingrese el tipo de la habitacion (individual/doble/suite): ");
+                            String tipoStr = sc.nextLine();
+                            tipo = TipoHabitacion.fromString(tipoStr); 
+                            System.out.printf("Ingrese el precio por noche: ");
+                            precio_noche = sc.nextDouble();
+                            sc.nextLine();
+                            System.out.print("Ingrese la capacidad: ");
+                            capacidad = sc.nextInt();
+                            sc.nextLine(); 
+                            System.out.printf("Ingrese el estado (disponible/mantenimiento): ");
+                            String estadoStr = sc.nextLine();
+                            estado = EstadoHabitacion.fromString(estadoStr);  
+                            Habitacion nuevHabitacion = new Habitacion(numero, tipo, precio_noche, capacidad, estado);
+                            FunHab.insertar(nuevHabitacion);
+                            System.out.printf("Nueva habitacion registrada con exito\n");
+                        break;
                         case 2: // Listar todas las habitaciones
-                        System.out.println(FunHab.enlistarHabitaciones());
-                            break;
+                            System.out.println(FunHab.enlistarHabitaciones());
+                        break;
                         case 3: //Buscar habitación por ID
-                        int id;
-                        System.out.printf("Ingrese el numero de habitacion por buscar: ");
-                        id = sc.nextInt();
-                        System.out.println("\nDetalles de la habitacion: \n" + FunHab.buscarID(id));
-                            break;
+                            System.out.printf("Ingrese el numero de habitacion por buscar: ");
+                            int id = sc.nextInt();
+                            System.out.println("\nDetalles de la habitacion: \n" + FunHab.buscarID(id));
+                        break;
                         case 4: // Actualizar precio
-                        System.out.print("Ingrese el ID de la habitación a actualizar: ");
-                        int idActualizar = sc.nextInt();
-                        sc.nextLine();
-                        Habitacion habitacionExistente = FunHab.buscarID(idActualizar);
-                        if (habitacionExistente == null) {
-                            System.out.println("No se encontró la habitación con ID: " + idActualizar);
-                            break;
-                        }
-                        System.out.print("Ingrese el nuevo precio: ");
-                        double nuevoPrecio = sc.nextDouble();
-                        sc.nextLine();
-                        // Actualizar solo el precio en el objeto
-                        habitacionExistente.setPrecio_noche(nuevoPrecio);
-                        // Llamar al método actualizar (actualiza todos los campos con los valores del objeto)
-                        FunHab.actualizar(habitacionExistente);
-                        System.out.println("Precio actualizado con éxito");
-                            break;
-                        case 5: //Actualizar estado
-                        
-                            break;
+                            System.out.print("Ingrese el ID de la habitación a actualizar: ");
+                            int id_habitacion_precio = sc.nextInt();
+                            sc.nextLine();
+                            Habitacion precioHabitacionExistente = FunHab.buscarID(id_habitacion_precio);
+                            if (precioHabitacionExistente == null) {
+                                System.out.println("No se encontró la habitación con ID: " + id_habitacion_precio);
+                                break;
+                            }
+                            System.out.print("Ingrese el nuevo precio: ");
+                            double nuevoPrecio = sc.nextDouble();
+                            sc.nextLine();
+                            precioHabitacionExistente.setPrecio_noche(nuevoPrecio);
+                            FunHab.actualizar(precioHabitacionExistente);
+                            System.out.println("Precio actualizado con éxito");
+                        break;
+                        case 5: // Actualizar estado
+                            System.out.print("Ingrese el ID de la habitación a actualizar: ");
+                            int id_habitacion_estado = sc.nextInt();
+                            sc.nextLine();
+                            Habitacion estadoHabitacionExistente = FunHab.buscarID(id_habitacion_estado);
+                            if (estadoHabitacionExistente == null) {
+                                System.out.println("No se encontró la habitación con ID: " + id_habitacion_estado);
+                                break;
+                            }
+                            System.out.print("Ingrese el nuevo estado (disponible/mantenimiento): ");
+                            String nuevoEstadoStr = sc.nextLine();
+                            EstadoHabitacion nuevoEstado = EstadoHabitacion.fromString(nuevoEstadoStr);
+                            estadoHabitacionExistente.setEstado(nuevoEstado);
+                            FunHab.actualizar(estadoHabitacionExistente);
+                            System.out.println("Estado actualizado con éxito");
+                        break;                        
                         case 6: // Eliminar habitación
                             break;
                         case 7: System.out.println("Saliendo del modulo de habitaciones...");
