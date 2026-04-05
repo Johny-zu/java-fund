@@ -210,7 +210,15 @@ public class GestionHotelera {
                             }
                         break;
                         case 3: // Buscar huésped por ID
-                            break;
+                            if (!FunHues.hayRegistros()) {
+                                System.out.println("No hay datos por mostrar");
+                            } else {
+                                System.out.printf("Ingresa el id a buscar: ");
+                                int buscarIdHuesped = sc.nextInt();
+                                sc.nextLine();
+                                System.out.println(FunHues.buscarPorID(buscarIdHuesped));
+                            }
+                        break;
                         case 4: //Buscar huésped por nombre
                             break;
                         case 5: // Buscar huésped por documento
