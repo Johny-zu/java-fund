@@ -1,8 +1,14 @@
 package BD.Gestion_hotel;
+import java.sql.SQLException;
 import java.util.Scanner;
 
+import BD.Gestion_hotel.FuncionesHotel.FuncionHabitacion;
+import BD.Gestion_hotel.Modelo.EstadoHabitacion;
+import BD.Gestion_hotel.Modelo.Habitacion;
+import BD.Gestion_hotel.Modelo.TipoHabitacion;
+
 public class GestionHotelera {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         Scanner sc = new Scanner(System.in);
         String menuPrincipal = "=== SISTEMA DE GESTIÓN HOTELERA ===\n" + 
                         "\n" + 
@@ -18,9 +24,10 @@ public class GestionHotelera {
                         "\n1. Registrar nueva habitación" + 
                         "\n2. Listar todas las habitaciones" + 
                         "\n3. Buscar habitación por ID" + 
-                        "\n4. Actualizar precio o estado" + 
-                        "\n5. Eliminar habitación" + 
-                        "\n6. Volver al menú principal" +
+                        "\n4. Actualizar precio" + 
+                        "\n5. Actualizar estado" +
+                        "\n6. Eliminar habitación" + 
+                        "\n7. Volver al menú principal" +
                         "\nSeleccione una opcion: ";
         String ModuloHuespedes = "--- GESTIÓN DE HUÉSPEDES ---\n" +
                         "\n1. Registrar nuevo huésped" + 
@@ -64,23 +71,106 @@ public class GestionHotelera {
                 case 1: do {
                     System.out.printf(ModuloHabitaciones);
                     m1 = sc.nextInt();
+                    sc.nextLine();
+
+                    FuncionHabitacion FunHab = new FuncionHabitacion();                
+                    String numero;
+                    TipoHabitacion tipo;
+                    double precio_noche;
+                    int capacidad;
+                    EstadoHabitacion estado;
                     switch (m1) {
-                        case 1:
-                            break;
-                        case 2:
+                        case 1: // Registrar nueva habitación
+                            System.out.printf("Ingrese numero de habitacion: ");
+                            numero = sc.nextLine();
+                            System.out.printf("Ingrese el tipo de la habitacion (individual/doble/suite): ");
+                            String tipoStr = sc.nextLine();
+                            tipo = TipoHabitacion.fromString(tipoStr); 
+                            System.out.printf("Ingrese el precio por noche: ");
+                            precio_noche = sc.nextDouble();
+                            sc.nextLine();
+                            System.out.print("Ingrese la capacidad: ");
+                            capacidad = sc.nextInt();
+                            sc.nextLine(); 
+                            System.out.printf("Ingrese el estado (disponible/mantenimiento): ");
+                            String estadoStr = sc.nextLine();
+                            estado = EstadoHabitacion.fromString(estadoStr);  
+                            Habitacion nuevHabitacion = new Habitacion(numero, tipo, precio_noche, capacidad, estado);
+                            FunHab.insertar(nuevHabitacion);
+                            System.out.printf("Nueva habitacion registrada con exito\n");
                         break;
-                        case 3:
-                            break;
-                        case 4:
-                            break;
-                        case 5:
-                            break;
-                        case 6: System.out.println("Saliendo del modulo de habitaciones...");
+                        case 2: // Listar todas las habitaciones
+                            if (!FunHab.hayRegistros()) {
+                                System.out.println("No hay habitaciones registradas en el sistema.");
+                                break;
+                            }
+                            System.out.println(FunHab.enlistarHabitaciones());
+                        break;
+                        case 3: //Buscar habitación por ID
+                            if (!FunHab.hayRegistros()) {
+                                System.out.println("No hay habitaciones registradas en el sistema.");
+                                break;
+                            }
+                            System.out.printf("Ingrese el numero de habitacion por buscar: ");
+                            int id = sc.nextInt();
+                            System.out.println("\nDetalles de la habitacion: \n" + FunHab.buscarID(id));
+                        break;
+                        case 4: // Actualizar precio
+                            if (!FunHab.hayRegistros()) {
+                                System.out.println("No hay habitaciones registradas en el sistema.");
+                                break;
+                            }
+                            System.out.print("Ingrese el ID de la habitación a actualizar: ");
+                            int id_habitacion_precio = sc.nextInt();
+                            sc.nextLine();
+                            Habitacion precioHabitacionExistente = FunHab.buscarID(id_habitacion_precio);
+                            if (precioHabitacionExistente == null) {
+                                System.out.println("No se encontró la habitación con ID: " + id_habitacion_precio);
+                                break;
+                            }
+                            System.out.print("Ingrese el nuevo precio: ");
+                            double nuevoPrecio = sc.nextDouble();
+                            sc.nextLine();
+                            precioHabitacionExistente.setPrecio_noche(nuevoPrecio);
+                            FunHab.actualizar(precioHabitacionExistente);
+                            System.out.println("Precio actualizado con éxito");
+                        break;
+                        case 5: // Actualizar estado
+                            if (!FunHab.hayRegistros()) {
+                                System.out.println("No hay habitaciones registradas en el sistema.");
+                                break;
+                            }
+                            System.out.print("Ingrese el ID de la habitación a actualizar: ");
+                            int id_habitacion_estado = sc.nextInt();
+                            sc.nextLine();
+                            Habitacion estadoHabitacionExistente = FunHab.buscarID(id_habitacion_estado);
+                            if (estadoHabitacionExistente == null) {
+                                System.out.println("No se encontró la habitación con ID: " + id_habitacion_estado);
+                                break;
+                            }
+                            System.out.print("Ingrese el nuevo estado (disponible/mantenimiento): ");
+                            String nuevoEstadoStr = sc.nextLine();
+                            EstadoHabitacion nuevoEstado = EstadoHabitacion.fromString(nuevoEstadoStr);
+                            estadoHabitacionExistente.setEstado(nuevoEstado);
+                            FunHab.actualizar(estadoHabitacionExistente);
+                            System.out.println("Estado actualizado con éxito");
+                        break;                        
+                        case 6: // Eliminar habitación
+                            if (!FunHab.hayRegistros()) {
+                                System.out.println("No hay habitaciones registradas en el sistema.");
+                                break;
+                            }
+                            System.out.print("Ingrese el ID de la habitación a eliminar: ");
+                            int id_eliminar = sc.nextInt();
+                            sc.nextLine();
+                            FunHab.eliminarPorID(id_eliminar);
+                        break;
+                        case 7: System.out.println("Saliendo del modulo de habitaciones...");
                             break;
                         default:
                             break;
                     }
-                } while (m1 != 6); 
+                } while (m1 != 7); 
                     break;
                 case 2: do {
                     System.out.printf(ModuloHuespedes);
@@ -170,7 +260,7 @@ public class GestionHotelera {
                     break;
                 case 6: System.out.println("Saliendo...");
                     break;
-                default:
+                default: System.out.println("Opcion invalida");
                     break;
             }
         } while (opcion != 6);
