@@ -203,6 +203,11 @@ public class GestionHotelera {
                         System.out.println("Huesped ingresado con exito\n");
                             break;
                         case 2: // Listar todos los huéspedes
+                            if (!FunHues.hayRegistros()) {
+                                System.out.println("No hay datos por mostrar");
+                            } else {
+                                System.out.println(FunHues.enlistarHuespedes() + "\n");
+                            }
                         break;
                         case 3: // Buscar huésped por ID
                             break;
