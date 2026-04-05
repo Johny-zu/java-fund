@@ -8,10 +8,16 @@ import BD.Gestion_hotel.ConexionBaseDatos;
 import BD.Gestion_hotel.Modelo.EstadoHabitacion;    
 
 public class FuncionHabitacion {
-    public boolean listaVacia(ArrayList<Habitacion> listadoHabitacion){
-        if (listadoHabitacion == null || listadoHabitacion.isEmpty()) {
-            return true;
-        } else return false;
+    public boolean hayRegistros() throws SQLException {
+        String sql = "SELECT COUNT(*) FROM habitaciones";
+        try (Connection conn = ConexionBaseDatos.getConnection();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql)) {
+            if (rs.next()) {
+                return rs.getInt(1) > 0;  // true si hay al menos 1 registro
+            }
+        }
+        return false;
     }
 
     public List<Habitacion> enlistarHabitaciones() throws SQLException{
