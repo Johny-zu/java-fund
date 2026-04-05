@@ -1,8 +1,14 @@
 package BD.Gestion_hotel;
+import java.sql.SQLException;
 import java.util.Scanner;
 
+import BD.Gestion_hotel.FuncionesHotel.FuncionHabitacion;
+import BD.Gestion_hotel.Modelo.EstadoHabitacion;
+import BD.Gestion_hotel.Modelo.Habitacion;
+import BD.Gestion_hotel.Modelo.TipoHabitacion;
+
 public class GestionHotelera {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         Scanner sc = new Scanner(System.in);
         String menuPrincipal = "=== SISTEMA DE GESTIÓN HOTELERA ===\n" + 
                         "\n" + 
@@ -64,16 +70,41 @@ public class GestionHotelera {
                 case 1: do {
                     System.out.printf(ModuloHabitaciones);
                     m1 = sc.nextInt();
+                    sc.nextLine();
+
+                    FuncionHabitacion FunHab = new FuncionHabitacion();                
+                    String numero;
+                    TipoHabitacion tipo;
+                    double precio_noche;
+                    int capacidad;
+                    EstadoHabitacion estado;
                     switch (m1) {
-                        case 1:
+                        case 1: // Registrar nueva habitación
+                        System.out.printf("Ingrese numero de habitacion: ");
+                        numero = sc.nextLine();
+                        System.out.printf("Ingrese el tipo de la habitacion (individual/doble/suite): ");
+                        String tipoStr = sc.nextLine();
+                        tipo = TipoHabitacion.fromString(tipoStr); 
+                        System.out.printf("Ingrese el precio por noche: ");
+                        precio_noche = sc.nextDouble();
+                        sc.nextLine();
+                        System.out.print("Ingrese la capacidad: ");
+                        capacidad = sc.nextInt();
+                        sc.nextLine(); 
+                        System.out.printf("Ingrese el estado (disponible/mantenimiento): ");
+                        String estadoStr = sc.nextLine();
+                        estado = EstadoHabitacion.fromString(estadoStr);  
+                        Habitacion nuevHabitacion = new Habitacion(numero, tipo, precio_noche, capacidad, estado);
+                        FunHab.insertar(nuevHabitacion);
+                        System.out.printf("Nueva habitacion registrada");
                             break;
-                        case 2:
+                        case 2: // Listar todas las habitaciones
                         break;
-                        case 3:
+                        case 3: //Buscar habitación por ID
                             break;
-                        case 4:
+                        case 4: //Actualizar precio o estado
                             break;
-                        case 5:
+                        case 5: // Eliminar habitación
                             break;
                         case 6: System.out.println("Saliendo del modulo de habitaciones...");
                             break;
@@ -170,7 +201,7 @@ public class GestionHotelera {
                     break;
                 case 6: System.out.println("Saliendo...");
                     break;
-                default:
+                default: System.out.println("Opcion invalida");
                     break;
             }
         } while (opcion != 6);
