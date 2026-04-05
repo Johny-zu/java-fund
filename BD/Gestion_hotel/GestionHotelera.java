@@ -22,6 +22,35 @@ public class GestionHotelera {
                         "\n5. Eliminar habitación" + 
                         "\n6. Volver al menú principal" +
                         "\nSeleccione una opcion: ";
+        String ModuloHuespedes = "--- GESTIÓN DE HUÉSPEDES ---\n" +
+                        "\n1. Registrar nuevo huésped" + 
+                        "\n2. Listar todos los huéspedes" + 
+                        "\n3. Buscar huésped por ID" + 
+                        "\n4. Buscar huésped por nombre" + 
+                        "\n5. Buscar huésped por documento" + 
+                        "\n6. Actualizar datos de huésped" + 
+                        "\n7. Eliminar huésped" + 
+                        "8. Volver al menú principal";
+        String ModuloReservas = "--- GESTIÓN DE RESERVAS ---\n" +
+                        "\n1. Crear nueva reserva" + 
+                        "\n2. Realizar check-in" + 
+                        "\n3. Realizar check-out" + 
+                        "\n4. Cancelar reserva" + 
+                        "5. Listar reservas (con filtros)\n" +
+                        "\n6. Ver detalle de reserva" + 
+                        "7. Volver al menú principal";
+        String ModuloPagos = "--- GESTIÓN DE PAGOS ---\n" +
+                        "\n1. Registrar pago" + 
+                        "\n2. Ver pagos de una reserva" + 
+                        "\n3. Ver saldo pendiente" + 
+                        "4. Volver al menú principal";
+        String ModuloReportes = "--- REPORTES ---\n" + 
+                        "\n1. Ocupación por fecha" + 
+                        "\n2. Ingresos por período" + 
+                        "\n3. Habitaciones más reservadas" + 
+                        "\n4. Huéspedes frecuentes" + 
+                        "\n5. Reservas activas hoy" + 
+                        "6. Volver al menú principal";
         int opcion, m1, m2, m3, m4, m5;
         
         do {
@@ -47,7 +76,7 @@ public class GestionHotelera {
                         default:
                             break;
                     }
-                }while (m1 != 6); 
+                } while (m1 != 6); 
                     break;
                 case 2:
                     break;
