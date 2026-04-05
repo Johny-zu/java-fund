@@ -30,27 +30,31 @@ public class GestionHotelera {
                         "\n5. Buscar huésped por documento" + 
                         "\n6. Actualizar datos de huésped" + 
                         "\n7. Eliminar huésped" + 
-                        "8. Volver al menú principal";
+                        "\n8. Volver al menú principal" +
+                        "\nSeleccione una opcion: ";
         String ModuloReservas = "--- GESTIÓN DE RESERVAS ---\n" +
                         "\n1. Crear nueva reserva" + 
                         "\n2. Realizar check-in" + 
                         "\n3. Realizar check-out" + 
                         "\n4. Cancelar reserva" + 
-                        "5. Listar reservas (con filtros)\n" +
+                        "\n5. Listar reservas (con filtros)" +
                         "\n6. Ver detalle de reserva" + 
-                        "7. Volver al menú principal";
+                        "\n7. Volver al menú principal" +
+                        "\nSeleccione una opcion: ";
         String ModuloPagos = "--- GESTIÓN DE PAGOS ---\n" +
                         "\n1. Registrar pago" + 
                         "\n2. Ver pagos de una reserva" + 
                         "\n3. Ver saldo pendiente" + 
-                        "4. Volver al menú principal";
+                        "\n4. Volver al menú principal" +
+                        "\nSeleccione una opcion: ";
         String ModuloReportes = "--- REPORTES ---\n" + 
                         "\n1. Ocupación por fecha" + 
                         "\n2. Ingresos por período" + 
                         "\n3. Habitaciones más reservadas" + 
                         "\n4. Huéspedes frecuentes" + 
                         "\n5. Reservas activas hoy" + 
-                        "6. Volver al menú principal";
+                        "\n6. Volver al menú principal"+
+                        "\nSeleccione una opcion: ";
         int opcion, m1, m2, m3, m4, m5;
         
         do {
@@ -71,20 +75,98 @@ public class GestionHotelera {
                             break;
                         case 5:
                             break;
-                        case 6: System.out.println("Saliendo del modulo de habitaciones");
+                        case 6: System.out.println("Saliendo del modulo de habitaciones...");
                             break;
                         default:
                             break;
                     }
                 } while (m1 != 6); 
                     break;
-                case 2:
+                case 2: do {
+                    System.out.printf(ModuloHuespedes);
+                    m2 = sc.nextInt();
+                    switch (m2) {
+                        case 1:
+                            break;
+                        case 2:
+                        break;
+                        case 3:
+                            break;
+                        case 4:
+                            break;
+                        case 5:
+                            break;
+                        case 6:
+                            break;
+                        case 7:
+                            break;
+                        case 8: System.out.println("Saliendo del modulo de huespedes...");
+                            break;
+                        default:
+                            break;
+                    }
+                } while (m2 != 8); 
                     break;
-                case 3:
+                case 3: do {
+                    System.out.printf(ModuloReservas);
+                    m3 = sc.nextInt();
+                    switch (m3) {
+                        case 1:
+                            break;
+                        case 2:
+                        break;
+                        case 3:
+                            break;
+                        case 4:
+                            break;
+                        case 5:
+                            break;
+                        case 6:
+                            break;
+                        case 7: System.out.println("Saliendo del modulo de reservas...");
+                            break;
+                        default:
+                            break;
+                    }
+                } while (m3 != 7); 
                     break;
-                case 4:
+                case 4:  do {
+                    System.out.printf(ModuloPagos);
+                    m4 = sc.nextInt();
+                    switch (m4) {
+                        case 1:
+                            break;
+                        case 2:
+                            break;
+                        case 3:
+                            break;
+                        case 4: System.out.println("Saliendo del modulo de pagos...");
+                            break;
+                        default:
+                            break;
+                    }
+                } while (m4 != 4); 
                     break;
-                case 5:
+                case 5: do {
+                    System.out.printf(ModuloReportes);
+                    m5 = sc.nextInt();
+                    switch (m5) {
+                        case 1:
+                            break;
+                        case 2:
+                        break;
+                        case 3:
+                            break;
+                        case 4:
+                            break;
+                        case 5:
+                            break;
+                        case 6: System.out.println("Saliendo del modulo de reportes...");
+                            break;
+                        default:
+                            break;
+                    }
+                } while (m5 != 6); 
                     break;
                 case 6: System.out.println("Saliendo...");
                     break;
