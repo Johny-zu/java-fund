@@ -24,9 +24,10 @@ public class GestionHotelera {
                         "\n1. Registrar nueva habitación" + 
                         "\n2. Listar todas las habitaciones" + 
                         "\n3. Buscar habitación por ID" + 
-                        "\n4. Actualizar precio o estado" + 
-                        "\n5. Eliminar habitación" + 
-                        "\n6. Volver al menú principal" +
+                        "\n4. Actualizar precio" + 
+                        "\n5. Actualizar estado" +
+                        "\n6. Eliminar habitación" + 
+                        "\n7. Volver al menú principal" +
                         "\nSeleccione una opcion: ";
         String ModuloHuespedes = "--- GESTIÓN DE HUÉSPEDES ---\n" +
                         "\n1. Registrar nuevo huésped" + 
@@ -107,16 +108,35 @@ public class GestionHotelera {
                         id = sc.nextInt();
                         System.out.println("\nDetalles de la habitacion: \n" + FunHab.buscarID(id));
                             break;
-                        case 4: //Actualizar precio o estado
+                        case 4: // Actualizar precio
+                        System.out.print("Ingrese el ID de la habitación a actualizar: ");
+                        int idActualizar = sc.nextInt();
+                        sc.nextLine();
+                        Habitacion habitacionExistente = FunHab.buscarID(idActualizar);
+                        if (habitacionExistente == null) {
+                            System.out.println("No se encontró la habitación con ID: " + idActualizar);
                             break;
-                        case 5: // Eliminar habitación
+                        }
+                        System.out.print("Ingrese el nuevo precio: ");
+                        double nuevoPrecio = sc.nextDouble();
+                        sc.nextLine();
+                        // Actualizar solo el precio en el objeto
+                        habitacionExistente.setPrecio_noche(nuevoPrecio);
+                        // Llamar al método actualizar (actualiza todos los campos con los valores del objeto)
+                        FunHab.actualizar(habitacionExistente);
+                        System.out.println("Precio actualizado con éxito");
                             break;
-                        case 6: System.out.println("Saliendo del modulo de habitaciones...");
+                        case 5: //Actualizar estado
+                        
+                            break;
+                        case 6: // Eliminar habitación
+                            break;
+                        case 7: System.out.println("Saliendo del modulo de habitaciones...");
                             break;
                         default:
                             break;
                     }
-                } while (m1 != 6); 
+                } while (m1 != 7); 
                     break;
                 case 2: do {
                     System.out.printf(ModuloHuespedes);
