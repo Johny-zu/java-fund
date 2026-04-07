@@ -491,13 +491,13 @@ public class GestionHotelera {
                             System.out.println(FunReportes.obtenerIngresosPorPeriodo(fecha_inicio, fecha_fin));
                         break;
                         case 3: // habitaciones mas reservas
-
+                            System.out.println(FunReportes.obtenerHabitacionesMasReservadas());
                         break;
                         case 4: // Huespedes frecuentes
-
+                            System.out.println(FunReportes.obtenerHuespedesFrecuentes());
                         break;
                         case 5: //Reservas activas hoy
-
+                            System.out.println(FunReportes.obtenerReservasActivasHoy());
                         break;
                         case 6: System.out.println("Saliendo del modulo de reportes...");
                         break;
