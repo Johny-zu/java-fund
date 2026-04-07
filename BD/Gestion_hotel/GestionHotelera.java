@@ -1,10 +1,13 @@
 package BD.Gestion_hotel;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 import BD.Gestion_hotel.FuncionesHotel.FuncionHabitacion;
+import BD.Gestion_hotel.FuncionesHotel.FuncionHuespedes;
 import BD.Gestion_hotel.Modelo.EstadoHabitacion;
 import BD.Gestion_hotel.Modelo.Habitacion;
+import BD.Gestion_hotel.Modelo.Huesped;
 import BD.Gestion_hotel.Modelo.TipoHabitacion;
 
 public class GestionHotelera {
@@ -64,6 +67,19 @@ public class GestionHotelera {
                         "\nSeleccione una opcion: ";
         int opcion, m1, m2, m3, m4, m5;
         
+        //Global
+        String numero = "";
+        
+        // Habitacion
+        TipoHabitacion tipo;
+        double precio_noche;
+        int capacidad;
+        EstadoHabitacion estado;
+
+        // Huesped
+        String nombre, telefono, documento, email;
+        LocalDate fecha_registro;
+
         do {
             System.out.printf(menuPrincipal);
             opcion = sc.nextInt();
@@ -72,13 +88,7 @@ public class GestionHotelera {
                     System.out.printf(ModuloHabitaciones);
                     m1 = sc.nextInt();
                     sc.nextLine();
-
                     FuncionHabitacion FunHab = new FuncionHabitacion();                
-                    String numero;
-                    TipoHabitacion tipo;
-                    double precio_noche;
-                    int capacidad;
-                    EstadoHabitacion estado;
                     switch (m1) {
                         case 1: // Registrar nueva habitación
                             System.out.printf("Ingrese numero de habitacion: ");
@@ -167,7 +177,7 @@ public class GestionHotelera {
                         break;
                         case 7: System.out.println("Saliendo del modulo de habitaciones...");
                             break;
-                        default:
+                        default: System.out.println("opcion invalida");
                             break;
                     }
                 } while (m1 != 7); 
@@ -175,24 +185,98 @@ public class GestionHotelera {
                 case 2: do {
                     System.out.printf(ModuloHuespedes);
                     m2 = sc.nextInt();
+                    sc.nextLine();
+                    FuncionHuespedes FunHues = new FuncionHuespedes();
                     switch (m2) {
                         case 1: // Registrar nuevo huésped
+                        System.out.printf("Ingrese nombre del huesped: ");
+                        nombre = sc.nextLine();
+                        System.out.printf("Ingrese el email del huesped: ");
+                        email = sc.nextLine();
+                        System.out.printf("Ingrese el telefono del huespes: ");
+                        telefono = sc.nextLine();
+                        System.out.printf("Ingresa el documento de validacion del usuario: ");
+                        documento = sc.nextLine();
+                        fecha_registro = LocalDate.now();
+                        Huesped nuevoHuesped = new Huesped(nombre, email, telefono, documento, fecha_registro);
+                        FunHues.insertar(nuevoHuesped);
+                        System.out.println("Huesped ingresado con exito\n");
                             break;
                         case 2: // Listar todos los huéspedes
+                            if (!FunHues.hayRegistros()) {
+                                System.out.println("No hay datos por mostrar");
+                            } else {
+                                System.out.println(FunHues.enlistarHuespedes() + "\n");
+                            }
                         break;
                         case 3: // Buscar huésped por ID
-                            break;
+                            if (!FunHues.hayRegistros()) {
+                                System.out.println("No hay datos por mostrar");
+                            } else {
+                                System.out.printf("Ingresa el id a buscar: ");
+                                int buscarIdHuesped = sc.nextInt();
+                                sc.nextLine();
+                                System.out.println(FunHues.buscarPorID(buscarIdHuesped));
+                            }
+                        break;
                         case 4: //Buscar huésped por nombre
-                            break;
+                            if (!FunHues.hayRegistros()) {
+                                System.out.println("No hay datos por mostrar");
+                            } else {
+                                System.out.printf("Ingresa el nombre del huesped a buscar: ");
+                                String buscarNombre = sc.nextLine();
+                                System.out.println(FunHues.buscarPorNombre(buscarNombre));
+                            }
+                        break;
                         case 5: // Buscar huésped por documento
-                            break;
+                            if (!FunHues.hayRegistros()) {
+                                System.out.println("No hay datos por mostrar");
+                            } else {
+                                System.out.printf("Ingresa la busqueda por tipo de documento: ");
+                                String buscarPorDocumento = sc.nextLine();
+                                System.out.println(FunHues.buscarPorDocumento(buscarPorDocumento));
+                            }
+                        break;
                         case 6: // Actualizar datos de huésped
-                            break;
+                            if (!FunHues.hayRegistros()) {
+                                System.out.println("No hay datos por mostrar");
+                            } else{
+                                System.out.printf("Ingresa el ID del huesped a actualizar: ");
+                                int id_para_actualizar = sc.nextInt();
+                                sc.nextLine();
+                                Huesped busquedaHuesped = FunHues.buscarPorID(id_para_actualizar);
+                                if (busquedaHuesped == null) {
+                                    System.out.println("No se hallo algun huesped con ese ID");
+                                    break;
+                                } else {
+                                    System.out.printf("Ingrese nombre del huesped: ");
+                                    nombre = sc.nextLine();
+                                    System.out.printf("Ingrese el email del huesped: ");
+                                    email = sc.nextLine();
+                                    System.out.printf("Ingrese el telefono del huesped: ");
+                                    telefono = sc.nextLine();
+                                    System.out.printf("Ingresa el documento de validacion del huesped: ");
+                                    documento = sc.nextLine();
+                                    fecha_registro = LocalDate.now();
+                                    Huesped actualizarHuesped = new Huesped(id_para_actualizar, nombre, email, telefono, documento, fecha_registro);
+                                    FunHues.actualizar(actualizarHuesped);
+                                    System.out.println("Huesped actualizado con exito\n");    
+                                }
+                            }
+                        break;
                         case 7: // Eliminar huésped
-                            break;
+                        if (!FunHues.hayRegistros()) {
+                            System.out.println("No hay datos por mostrar");
+                        } else {
+                            System.out.print("Ingresa el ID del huésped a eliminar: ");
+                            int id_para_borrar = sc.nextInt();
+                            sc.nextLine();
+                            FunHues.eliminarPorID(id_para_borrar);
+                        }
+                        break;
                         case 8: System.out.println("Saliendo del modulo de huespedes...");
                             break;
-                        default:
+                        default: System.out.println("opcion invalida");
                             break;
                     }
                 } while (m2 != 8); 
@@ -215,7 +299,7 @@ public class GestionHotelera {
                             break;
                         case 7: System.out.println("Saliendo del modulo de reservas...");
                             break;
-                        default:
+                        default: System.out.println("opcion invalida");
                             break;
                     }
                 } while (m3 != 7); 
@@ -232,7 +316,7 @@ public class GestionHotelera {
                             break;
                         case 4: System.out.println("Saliendo del modulo de pagos...");
                             break;
-                        default:
+                        default: System.out.println("opcion invalida");
                             break;
                     }
                 } while (m4 != 4); 
@@ -253,7 +337,7 @@ public class GestionHotelera {
                             break;
                         case 6: System.out.println("Saliendo del modulo de reportes...");
                             break;
-                        default:
+                        default: System.out.println("opcion invalida");
                             break;
                     }
                 } while (m5 != 6); 
