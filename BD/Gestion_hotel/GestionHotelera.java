@@ -441,6 +441,13 @@ public class GestionHotelera {
                             System.out.println("Pago registrado con éxito");
                         break;
                         case 2: // ver pagos de una reserva
+                            if (!FunPagos.hayRegistros()) {
+                                System.out.println("No hay reservas por pagar");
+                            } else{
+                                System.out.println("Ingrese los pagos ingresados por el huesped: ");
+                                id_huesped = sc.nextInt();
+                                System.out.println(FunPagos.listarPorReserva(id_huesped));
+                            }
                         break;
                         case 3: // ver saldo pendiente
                         break;
