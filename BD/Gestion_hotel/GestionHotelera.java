@@ -461,14 +461,21 @@ public class GestionHotelera {
                             }
                         break;
                         case 3: // ver saldo pendiente
-                            if (!FunPagos.hayRegistros()) {
-                                System.out.println("No hay reservas por mostrar");
-                            } else {
-                                System.out.println("Ingresa el id del huesped");
-                                id_huesped = sc.nextInt();
-                                sc.nextLine();
-                                System.out.println("El saldo pendiente es: ");
+                            System.out.print("Ingresa el ID de la reserva: ");
+                            id_reserva = sc.nextInt();
+                            sc.nextLine();
+                            Reservas reservaSaldo = FunReserva.buscarPorID(id_reserva);
+                            if (reservaSaldo == null) {
+                                System.out.println("No se encontró la reserva");
+                                break;
                             }
+                            double totalReserva = reservaSaldo.getTotal();
+                            double totalPagado = FunPagos.sumarPagosPorReserva(id_reserva);
+                            double saldoPendiente = totalReserva - totalPagado;
+                            
+                            System.out.println("Total de la reserva: $" + totalReserva);
+                            System.out.println("Total pagado: $" + totalPagado);
+                            System.out.println("Saldo pendiente: $" + saldoPendiente);
                         break;
                         case 4: System.out.println("Saliendo del modulo de pagos...");
                         break;
