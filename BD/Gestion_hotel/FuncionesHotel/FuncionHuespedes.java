@@ -22,6 +22,14 @@ public class FuncionHuespedes {
         }
         return false;
     }
+
+    public boolean existehuesped(int id) throws SQLException{
+        Huesped huespedExistente = buscarPorID(id);
+        if (huespedExistente == null) {
+            return false;
+        }
+        return true;
+    }
     
     public List<Huesped> enlistarHuespedes()throws SQLException{
         List<Huesped> huesped = new ArrayList<>();

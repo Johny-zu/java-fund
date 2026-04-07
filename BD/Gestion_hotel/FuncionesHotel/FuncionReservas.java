@@ -14,7 +14,7 @@ import BD.Gestion_hotel.Modelo.Huesped;
 import BD.Gestion_hotel.Modelo.Reservas;
 
 public class FuncionReservas {
-    public boolean harRegistros() throws SQLException{
+    public boolean hayRegistros() throws SQLException{
         String sql = "SELECT COUNT(*) FROM reservas";
         try(Connection conn = ConexionBaseDatos.getConnection();
             Statement stmt = conn.createStatement();
@@ -252,5 +252,100 @@ public class FuncionReservas {
             }
         }
         return total;
+    }
+
+    public void registroCheckIn(int id_reserva) throws SQLException {
+        String sql = "UPDATE reservas SET estado = 'check_in' WHERE id_reserva = ? AND estado = 'confirmada'";
+        try (Connection conn = ConexionBaseDatos.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, id_reserva);
+            int filas = pstmt.executeUpdate();       
+            if (filas > 0) {
+                System.out.println("Check-in realizado con éxito");
+            } else {
+                System.out.println("No se encontró una reserva confirmada con ID: " + id_reserva);
+            }
+        }
+    }
+
+    public void registroCheckOut(int id_reserva) throws SQLException {
+        // Primero verificar el estado
+        String sqlVerificar = "SELECT estado FROM reservas WHERE id_reserva = ?";
+        try (Connection conn = ConexionBaseDatos.getConnection();
+            PreparedStatement pstmtVerificar = conn.prepareStatement(sqlVerificar)) {
+            pstmtVerificar.setInt(1, id_reserva);
+            ResultSet rs = pstmtVerificar.executeQuery();
+            if (!rs.next()) {
+                System.out.println("No se encontró ninguna reserva con ID: " + id_reserva);
+                return;
+            }
+            String estadoActual = rs.getString("estado");
+            if (estadoActual.equals("check_out")) {
+                System.out.println("La reserva ya ha realizado check-out anteriormente.");
+                return;
+            }
+            if (!estadoActual.equals("check_in")) {
+                System.out.println("La reserva no está en estado check-in. Estado actual: " + estadoActual);
+                return;
+            }
+        }
+        
+        String sqlUpdate = "UPDATE reservas SET estado = 'check_out' WHERE id_reserva = ?";
+        try (Connection conn = ConexionBaseDatos.getConnection();
+            PreparedStatement pstmtUpdate = conn.prepareStatement(sqlUpdate)) {
+            pstmtUpdate.setInt(1, id_reserva);
+            pstmtUpdate.executeUpdate();
+            System.out.println("Check-out realizado con éxito");
+        }
+    }
+
+    public void cancelarReserva(int id_reserva) throws SQLException {
+        Reservas reserva = buscarPorID(id_reserva);        
+        if (reserva == null) {
+            System.out.println("No se encontró la reserva con ID: " + id_reserva);
+            return;
+        }
+        if (reserva.getEstado() == Estado.CANCELADA) {
+            System.out.println("La reserva ya está cancelada");
+            return;
+        }
+        if (reserva.getEstado() == Estado.CHECK_IN || reserva.getEstado() == Estado.CHECK_OUT) {
+            System.out.println("No se puede cancelar la reserva porque ya está en estado: " + reserva.getEstado().getValor());
+            return;
+        }
+        reserva.setEstado(Estado.CANCELADA);
+        actualizar(reserva);
+        System.out.println("Reserva cancelada con éxito");
+    }
+
+    public Reservas detalleReserva(int id_reserva) throws SQLException {
+        Reservas detalle = null;
+        FuncionHuespedes FunHues = new FuncionHuespedes();
+        String sql = "SELECT * FROM reservas WHERE id_reserva = ?";
+        try (Connection conn = ConexionBaseDatos.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, id_reserva);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    java.sql.Date sqlDateInicio = rs.getDate("fecha_inicio");
+                    LocalDate fechaInicio = sqlDateInicio.toLocalDate();
+                    java.sql.Date sqlDateFin = rs.getDate("fecha_fin");
+                    LocalDate fechaFin = sqlDateFin.toLocalDate();
+                    java.sql.Timestamp sqlDateReserva = rs.getTimestamp("fecha_reserva");
+                    LocalDateTime fechaReserva = sqlDateReserva.toLocalDateTime();
+                    
+                    detalle = new Reservas(
+                        rs.getInt("id_reserva"),
+                        fechaInicio,
+                        fechaFin,
+                        fechaReserva,
+                        Estado.fromString(rs.getString("estado")),
+                        rs.getDouble("total")
+                    );
+                    detalle.setHuesped(FunHues.buscarPorID(rs.getInt("id_huesped")));
+                }
+            }
+        }
+        return detalle;
     }
 }

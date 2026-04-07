@@ -1,13 +1,17 @@
 package BD.Gestion_hotel;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 import BD.Gestion_hotel.FuncionesHotel.FuncionHabitacion;
 import BD.Gestion_hotel.FuncionesHotel.FuncionHuespedes;
+import BD.Gestion_hotel.FuncionesHotel.FuncionReservas;
+import BD.Gestion_hotel.Modelo.Estado;
 import BD.Gestion_hotel.Modelo.EstadoHabitacion;
 import BD.Gestion_hotel.Modelo.Habitacion;
 import BD.Gestion_hotel.Modelo.Huesped;
+import BD.Gestion_hotel.Modelo.Reservas;
 import BD.Gestion_hotel.Modelo.TipoHabitacion;
 
 public class GestionHotelera {
@@ -69,6 +73,7 @@ public class GestionHotelera {
         
         //Global
         String numero = "";
+        int id_reserva;
         
         // Habitacion
         TipoHabitacion tipo;
@@ -80,6 +85,19 @@ public class GestionHotelera {
         String nombre, telefono, documento, email;
         LocalDate fecha_registro;
 
+        //Reservas
+        int id_huesped; //FK
+        LocalDate fecha_inicio, fecha_fin;
+        LocalDateTime fecha_reserva;
+        Estado estado_reserva;
+        double total_reserva;
+
+        // Funciones
+        FuncionHabitacion FunHab = new FuncionHabitacion();                
+        FuncionHuespedes FunHues = new FuncionHuespedes();
+        FuncionReservas FunReserva = new FuncionReservas();
+
+
         do {
             System.out.printf(menuPrincipal);
             opcion = sc.nextInt();
@@ -88,7 +106,6 @@ public class GestionHotelera {
                     System.out.printf(ModuloHabitaciones);
                     m1 = sc.nextInt();
                     sc.nextLine();
-                    FuncionHabitacion FunHab = new FuncionHabitacion();                
                     switch (m1) {
                         case 1: // Registrar nueva habitación
                             System.out.printf("Ingrese numero de habitacion: ");
@@ -186,7 +203,6 @@ public class GestionHotelera {
                     System.out.printf(ModuloHuespedes);
                     m2 = sc.nextInt();
                     sc.nextLine();
-                    FuncionHuespedes FunHues = new FuncionHuespedes();
                     switch (m2) {
                         case 1: // Registrar nuevo huésped
                         System.out.printf("Ingrese nombre del huesped: ");
@@ -286,21 +302,100 @@ public class GestionHotelera {
                     m3 = sc.nextInt();
                     switch (m3) {
                         case 1: // Crear nueva reserva
-                        
+                            if (!FunHues.hayRegistros()) {
+                                System.out.println("No hay ningun huesped registrado que pueda reservar");
+                            } 
+                            System.out.printf("Ingresa el ID del huesped que desea reservar: ");
+                            id_huesped = sc.nextInt();
+                            sc.nextLine();
+                            if (!FunHues.existehuesped(id_huesped)) {
+                                System.out.println("No se hallo el usuario con el ID: " + id_huesped);
+                                break;
+                            } else {
+                                System.out.printf("Ingresa la fecha de inicio (YYYY-MM-DD): ");
+                                String fechaInicioStr = sc.nextLine();
+                                fecha_inicio = LocalDate.parse(fechaInicioStr);
+
+                                System.out.print("Ingrese la fecha de fin (YYYY-MM-DD): ");
+                                String fechaFinStr = sc.nextLine();
+                                fecha_fin = LocalDate.parse(fechaFinStr);
+
+                                fecha_reserva = LocalDateTime.now();
+                                estado_reserva = Estado.CONFIRMADA;
+                                // Total inicial (puede ser 0 y luego se calcula con las habitaciones)
+                                total_reserva = 0.0;
+                                Reservas nuevaReserva = new Reservas(fecha_inicio, fecha_fin, fecha_reserva, estado_reserva, total_reserva);                            
+                                nuevaReserva.setHuesped(FunHues.buscarPorID(id_huesped));
+                                FunReserva.insertar(nuevaReserva);
+                                System.out.println("Reserva creada con éxito");
+                            }
                         break;
-                        case 2: // Realizar check_in
+                        case 2: // Realizar check-in
+                            if (!FunReserva.hayRegistros()) {
+                                System.out.println("No hay reservas registradas");
+                                break;
+                            }
+                            System.out.print("Ingresa el ID del huésped: ");
+                            int id_huesped_checkin = sc.nextInt();
+                            sc.nextLine(); 
+                            if (!FunHues.existehuesped(id_huesped_checkin)) {
+                                System.out.println("No se encontró el huésped");
+                                break;
+                            }
+                            System.out.print("Ingresa el ID de la reserva: ");
+                            id_reserva = sc.nextInt();
+                            sc.nextLine();
+                            FunReserva.registroCheckIn(id_reserva);
                         break;
                         case 3: // Realizar check_out
-                        
+                            if (!FunReserva.hayRegistros()) {
+                                System.out.println("No hay reservas registradas");
+                                break;
+                            }
+                            System.out.print("Ingresa el ID del huésped: ");
+                            int id_huesped_checkout = sc.nextInt();
+                            sc.nextLine(); 
+                            if (!FunHues.existehuesped(id_huesped_checkout)) {
+                                System.out.println("No se encontró el huésped");
+                                break;
+                            }
+                            System.out.print("Ingresa el ID de la reserva: ");
+                            id_reserva = sc.nextInt();
+                            sc.nextLine();
+                            FunReserva.registroCheckOut(id_reserva);
                         break;
-                        case 4: // Cacelar reserva
-                        
+                        case 4: // Cancelar reserva
+                            if (!FunReserva.hayRegistros()) {
+                                System.out.println("No hay reservas registradas");
+                                break;
+                            }
+                            
+                            System.out.print("Ingresa el ID de la reserva a cancelar: ");
+                            int id_reserva_cancelar = sc.nextInt();
+                            sc.nextLine();
+                            
+                            FunReserva.cancelarReserva(id_reserva_cancelar);
                         break;
                         case 5: //Listar reservas
-                        
+                            if (!FunReserva.hayRegistros()) {
+                                System.out.println("No hay reservas registradas");
+                            } 
+                            System.out.println(FunReserva.enlistarReservas());
                         break;
                         case 6: // Detalles de la reserva
-                        
+                            if (!FunReserva.hayRegistros()) {
+                                System.out.println("No hay reservas registradas");
+                                break;
+                            }
+                            System.out.print("Ingresa el ID de la reserva: ");
+                            int id_reserva_detalle = sc.nextInt();
+                            sc.nextLine();
+                            Reservas reservaDetalle = FunReserva.detalleReserva(id_reserva_detalle);
+                            if (reservaDetalle == null) {
+                                System.out.println("No se encontró la reserva con ID: " + id_reserva_detalle);
+                            } else {
+                                System.out.println(reservaDetalle);
+                            }
                         break;
                         case 7: System.out.println("Saliendo del modulo de reservas...");
                         break;
