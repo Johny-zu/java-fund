@@ -298,4 +298,23 @@ public class FuncionReservas {
             System.out.println("Check-out realizado con éxito");
         }
     }
+
+    public void cancelarReserva(int id_reserva) throws SQLException {
+        Reservas reserva = buscarPorID(id_reserva);        
+        if (reserva == null) {
+            System.out.println("No se encontró la reserva con ID: " + id_reserva);
+            return;
+        }
+        if (reserva.getEstado() == Estado.CANCELADA) {
+            System.out.println("La reserva ya está cancelada");
+            return;
+        }
+        if (reserva.getEstado() == Estado.CHECK_IN || reserva.getEstado() == Estado.CHECK_OUT) {
+            System.out.println("No se puede cancelar la reserva porque ya está en estado: " + reserva.getEstado().getValor());
+            return;
+        }
+        reserva.setEstado(Estado.CANCELADA);
+        actualizar(reserva);
+        System.out.println("Reserva cancelada con éxito");
+    }
 }

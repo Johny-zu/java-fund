@@ -365,7 +365,16 @@ public class GestionHotelera {
                             FunReserva.registroCheckOut(id_reserva);
                         break;
                         case 4: // Cancelar reserva
-                        
+                            if (!FunReserva.hayRegistros()) {
+                                System.out.println("No hay reservas registradas");
+                                break;
+                            }
+                            
+                            System.out.print("Ingresa el ID de la reserva a cancelar: ");
+                            int id_reserva_cancelar = sc.nextInt();
+                            sc.nextLine();
+                            
+                            FunReserva.cancelarReserva(id_reserva_cancelar);
                         break;
                         case 5: //Listar reservas
                         
