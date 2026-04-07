@@ -6,11 +6,13 @@ import java.util.Scanner;
 
 import BD.Gestion_hotel.FuncionesHotel.FuncionHabitacion;
 import BD.Gestion_hotel.FuncionesHotel.FuncionHuespedes;
+import BD.Gestion_hotel.FuncionesHotel.FuncionPago;
 import BD.Gestion_hotel.FuncionesHotel.FuncionReservas;
 import BD.Gestion_hotel.Modelo.Estado;
 import BD.Gestion_hotel.Modelo.EstadoHabitacion;
 import BD.Gestion_hotel.Modelo.Habitacion;
 import BD.Gestion_hotel.Modelo.Huesped;
+import BD.Gestion_hotel.Modelo.Metodo;
 import BD.Gestion_hotel.Modelo.Reservas;
 import BD.Gestion_hotel.Modelo.TipoHabitacion;
 
@@ -92,10 +94,17 @@ public class GestionHotelera {
         Estado estado_reserva;
         double total_reserva;
 
+        // Pagos
+        double monto;
+        LocalDateTime fecha_pago;
+        Metodo metodo_pago;
+        String referencia;
+
         // Funciones
         FuncionHabitacion FunHab = new FuncionHabitacion();                
         FuncionHuespedes FunHues = new FuncionHuespedes();
         FuncionReservas FunReserva = new FuncionReservas();
+        FuncionPago FunPagos = new FuncionPago();
 
 
         do {
@@ -408,11 +417,11 @@ public class GestionHotelera {
                     System.out.printf(ModuloPagos);
                     m4 = sc.nextInt();
                     switch (m4) {
-                        case 1:
+                        case 1: // registrar pagos
                             break;
-                        case 2:
+                        case 2: // ver pagos de una reserva
                             break;
-                        case 3:
+                        case 3: // ver saldo pendiente
                             break;
                         case 4: System.out.println("Saliendo del modulo de pagos...");
                             break;

@@ -3,6 +3,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,18 @@ import BD.Gestion_hotel.Modelo.Pagos;
 import BD.Gestion_hotel.Modelo.Metodo;
 
 public class FuncionPago {
+    public boolean hayRegistros() throws SQLException{
+        String sql = "SELECT COUNT(*) FROM pagos";
+        try(Connection conn = ConexionBaseDatos.getConnection();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql)){
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        return false;
+    }
+    
     public List<Pagos> listarPorReserva(int id) throws SQLException {
         List<Pagos> listadoPagos = new ArrayList<>();
         String sql = "SELECT * FROM pagos WHERE id_reserva = ?";
