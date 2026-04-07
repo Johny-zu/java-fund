@@ -13,6 +13,7 @@ import BD.Gestion_hotel.Modelo.EstadoHabitacion;
 import BD.Gestion_hotel.Modelo.Habitacion;
 import BD.Gestion_hotel.Modelo.Huesped;
 import BD.Gestion_hotel.Modelo.Metodo;
+import BD.Gestion_hotel.Modelo.Pagos;
 import BD.Gestion_hotel.Modelo.Reservas;
 import BD.Gestion_hotel.Modelo.TipoHabitacion;
 
@@ -417,16 +418,36 @@ public class GestionHotelera {
                     System.out.printf(ModuloPagos);
                     m4 = sc.nextInt();
                     switch (m4) {
-                        case 1: // registrar pagos
-                            break;
+                        case 1: // Registrar pagos
+                            System.out.print("Ingresa el id de la reserva que esta pagando: ");
+                            id_reserva = sc.nextInt();
+                            sc.nextLine();
+                            Reservas reservaPago = FunReserva.buscarPorID(id_reserva);
+                            if (reservaPago == null) {
+                                System.out.println("No se encontró la reserva con ID: " + id_reserva);
+                                break;
+                            }
+                            System.out.print("Ingresa el monto pagado: ");
+                            monto = sc.nextDouble();
+                            sc.nextLine();
+                            fecha_pago = LocalDateTime.now();
+                            System.out.print("Ingrese el metodo con el que se hara el pago (efectivo/tarjeta/transferencia): ");
+                            String metodo_pagoStr = sc.nextLine();
+                            metodo_pago = Metodo.fromString(metodo_pagoStr);
+                            System.out.print("Ingresa la referencia: ");
+                            referencia = sc.nextLine();
+                            Pagos pagoNuevo = new Pagos(reservaPago, monto, fecha_pago, metodo_pago, referencia);
+                            FunPagos.insertar(pagoNuevo);
+                            System.out.println("Pago registrado con éxito");
+                        break;
                         case 2: // ver pagos de una reserva
-                            break;
+                        break;
                         case 3: // ver saldo pendiente
-                            break;
+                        break;
                         case 4: System.out.println("Saliendo del modulo de pagos...");
-                            break;
+                        break;
                         default: System.out.println("opcion invalida");
-                            break;
+                        break;
                     }
                 } while (m4 != 4); 
                     break;
