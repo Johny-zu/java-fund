@@ -377,10 +377,25 @@ public class GestionHotelera {
                             FunReserva.cancelarReserva(id_reserva_cancelar);
                         break;
                         case 5: //Listar reservas
-                        
+                            if (!FunReserva.hayRegistros()) {
+                                System.out.println("No hay reservas registradas");
+                            } 
+                            System.out.println(FunReserva.enlistarReservas());
                         break;
                         case 6: // Detalles de la reserva
-                        
+                            if (!FunReserva.hayRegistros()) {
+                                System.out.println("No hay reservas registradas");
+                                break;
+                            }
+                            System.out.print("Ingresa el ID de la reserva: ");
+                            int id_reserva_detalle = sc.nextInt();
+                            sc.nextLine();
+                            Reservas reservaDetalle = FunReserva.detalleReserva(id_reserva_detalle);
+                            if (reservaDetalle == null) {
+                                System.out.println("No se encontró la reserva con ID: " + id_reserva_detalle);
+                            } else {
+                                System.out.println(reservaDetalle);
+                            }
                         break;
                         case 7: System.out.println("Saliendo del modulo de reservas...");
                         break;

@@ -317,4 +317,35 @@ public class FuncionReservas {
         actualizar(reserva);
         System.out.println("Reserva cancelada con éxito");
     }
+
+    public Reservas detalleReserva(int id_reserva) throws SQLException {
+        Reservas detalle = null;
+        FuncionHuespedes FunHues = new FuncionHuespedes();
+        String sql = "SELECT * FROM reservas WHERE id_reserva = ?";
+        try (Connection conn = ConexionBaseDatos.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, id_reserva);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    java.sql.Date sqlDateInicio = rs.getDate("fecha_inicio");
+                    LocalDate fechaInicio = sqlDateInicio.toLocalDate();
+                    java.sql.Date sqlDateFin = rs.getDate("fecha_fin");
+                    LocalDate fechaFin = sqlDateFin.toLocalDate();
+                    java.sql.Timestamp sqlDateReserva = rs.getTimestamp("fecha_reserva");
+                    LocalDateTime fechaReserva = sqlDateReserva.toLocalDateTime();
+                    
+                    detalle = new Reservas(
+                        rs.getInt("id_reserva"),
+                        fechaInicio,
+                        fechaFin,
+                        fechaReserva,
+                        Estado.fromString(rs.getString("estado")),
+                        rs.getDouble("total")
+                    );
+                    detalle.setHuesped(FunHues.buscarPorID(rs.getInt("id_huesped")));
+                }
+            }
+        }
+        return detalle;
+    }
 }
