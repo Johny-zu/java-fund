@@ -2,6 +2,7 @@ package BD.Gestion_hotel;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Scanner;
 
 import BD.Gestion_hotel.FuncionesHotel.FuncionHabitacion;
@@ -448,13 +449,15 @@ public class GestionHotelera {
                             System.out.println("Pago registrado con éxito");
                         break;
                         case 2: // ver pagos de una reserva
-                            if (!FunPagos.hayRegistros()) {
-                                System.out.println("No hay reservas por pagar");
-                            } else{
-                                System.out.println("Ingrese los pagos ingresados por el huesped: ");
-                                id_huesped = sc.nextInt();
-                                sc.nextLine();
-                                System.out.println(FunPagos.listarPorReserva(id_huesped));
+                            System.out.print("Ingrese el ID de la reserva: ");
+                            id_reserva = sc.nextInt();
+                            List<Pagos> pagos = FunPagos.listarPorReserva(id_reserva);
+                            if (pagos.isEmpty()) {
+                                System.out.println("No hay pagos registrados para esta reserva");
+                            } else {
+                                for (Pagos p : pagos) {
+                                    System.out.println(p);
+                                }
                             }
                         break;
                         case 3: // ver saldo pendiente
