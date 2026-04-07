@@ -301,36 +301,50 @@ public class GestionHotelera {
                     m3 = sc.nextInt();
                     switch (m3) {
                         case 1: // Crear nueva reserva
-                        if (!FunHues.hayRegistros()) {
-                            System.out.println("No hay ningun huesped registrado que pueda reservar");
-                        } 
-                        System.out.printf("Ingresa el ID del huesped que desea reservar: ");
-                        id_huesped = sc.nextInt();
-                        sc.nextLine();
-                        Huesped huespedExistente = FunHues.buscarPorID(id_huesped);
-                        if (huespedExistente == null) {
-                            System.out.println("No se hallo el usuario con el ID: " + id_huesped);
-                            break;
-                        } else {
-                            System.out.printf("Ingresa la fecha de inicio (YYYY-MM-DD): ");
-                            String fechaInicioStr = sc.nextLine();
-                            fecha_inicio = LocalDate.parse(fechaInicioStr);
+                            if (!FunHues.hayRegistros()) {
+                                System.out.println("No hay ningun huesped registrado que pueda reservar");
+                            } 
+                            System.out.printf("Ingresa el ID del huesped que desea reservar: ");
+                            id_huesped = sc.nextInt();
+                            sc.nextLine();
+                            if (!FunHues.existehuesped(id_huesped)) {
+                                System.out.println("No se hallo el usuario con el ID: " + id_huesped);
+                                break;
+                            } else {
+                                System.out.printf("Ingresa la fecha de inicio (YYYY-MM-DD): ");
+                                String fechaInicioStr = sc.nextLine();
+                                fecha_inicio = LocalDate.parse(fechaInicioStr);
 
-                            System.out.print("Ingrese la fecha de fin (YYYY-MM-DD): ");
-                            String fechaFinStr = sc.nextLine();
-                            fecha_fin = LocalDate.parse(fechaFinStr);
+                                System.out.print("Ingrese la fecha de fin (YYYY-MM-DD): ");
+                                String fechaFinStr = sc.nextLine();
+                                fecha_fin = LocalDate.parse(fechaFinStr);
 
-                            fecha_reserva = LocalDateTime.now();
-                            estado_reserva = Estado.CONFIRMADA;
-                            // Total inicial (puede ser 0 y luego se calcula con las habitaciones)
-                            total_reserva = 0.0;
-                            Reservas nuevaReserva = new Reservas(fecha_inicio, fecha_fin, fecha_reserva, estado_reserva, total_reserva);                            
-                            nuevaReserva.setHuesped(huespedExistente);
-                            FunReserva.insertar(nuevaReserva);
-                            System.out.println("Reserva creada con éxito");
-                        }
+                                fecha_reserva = LocalDateTime.now();
+                                estado_reserva = Estado.CONFIRMADA;
+                                // Total inicial (puede ser 0 y luego se calcula con las habitaciones)
+                                total_reserva = 0.0;
+                                Reservas nuevaReserva = new Reservas(fecha_inicio, fecha_fin, fecha_reserva, estado_reserva, total_reserva);                            
+                                nuevaReserva.setHuesped(FunHues.buscarPorID(id_huesped));
+                                FunReserva.insertar(nuevaReserva);
+                                System.out.println("Reserva creada con éxito");
+                            }
                         break;
-                        case 2: // Realizar check_in
+                        case 2: // Realizar check-in
+                            if (!FunReserva.hayRegistros()) {
+                                System.out.println("No hay reservas registradas");
+                                break;
+                            }
+                            System.out.print("Ingresa el ID del huésped: ");
+                            int id_huesped_checkin = sc.nextInt();
+                            sc.nextLine(); 
+                            if (!FunHues.existehuesped(id_huesped_checkin)) {
+                                System.out.println("No se encontró el huésped");
+                                break;
+                            }
+                            System.out.print("Ingresa el ID de la reserva: ");
+                            int id_reserva = sc.nextInt();
+                            sc.nextLine();
+                            FunReserva.registroCheckIn(id_reserva);
                         break;
                         case 3: // Realizar check_out
                         

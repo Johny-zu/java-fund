@@ -253,4 +253,18 @@ public class FuncionReservas {
         }
         return total;
     }
+
+    public void registroCheckIn(int id_reserva) throws SQLException {
+        String sql = "UPDATE reservas SET estado = 'check_in' WHERE id_reserva = ? AND estado = 'confirmada'";
+        try (Connection conn = ConexionBaseDatos.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, id_reserva);
+            int filas = pstmt.executeUpdate();       
+            if (filas > 0) {
+                System.out.println("Check-in realizado con éxito");
+            } else {
+                System.out.println("No se encontró una reserva confirmada con ID: " + id_reserva);
+            }
+        }
+    }
 }
