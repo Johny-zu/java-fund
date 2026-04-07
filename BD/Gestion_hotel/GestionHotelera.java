@@ -115,6 +115,7 @@ public class GestionHotelera {
         do {
             System.out.printf(menuPrincipal);
             opcion = sc.nextInt();
+            sc.nextLine();
             switch (opcion) {
                 case 1: do {
                     System.out.printf(ModuloHabitaciones);
@@ -314,6 +315,7 @@ public class GestionHotelera {
                 case 3: do {
                     System.out.printf(ModuloReservas);
                     m3 = sc.nextInt();
+                    sc.nextLine();
                     switch (m3) {
                         case 1: // Crear nueva reserva
                             if (!FunHues.hayRegistros()) {
@@ -421,6 +423,7 @@ public class GestionHotelera {
                 case 4:  do {
                     System.out.printf(ModuloPagos);
                     m4 = sc.nextInt();
+                    sc.nextLine();
                     switch (m4) {
                         case 1: // Registrar pagos
                             System.out.print("Ingresa el id de la reserva que esta pagando: ");
@@ -474,6 +477,7 @@ public class GestionHotelera {
                 case 5: do {
                     System.out.printf(ModuloReportes);
                     m5 = sc.nextInt();
+                    sc.nextLine();
                     switch (m5) {
                         case 1: // Ocupacion por fecha
                             System.out.print("Ingrese la fecha de fin (YYYY-MM-DD): ");
