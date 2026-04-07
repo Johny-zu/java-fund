@@ -73,6 +73,7 @@ public class GestionHotelera {
         
         //Global
         String numero = "";
+        int id_reserva;
         
         // Habitacion
         TipoHabitacion tipo;
@@ -342,14 +343,28 @@ public class GestionHotelera {
                                 break;
                             }
                             System.out.print("Ingresa el ID de la reserva: ");
-                            int id_reserva = sc.nextInt();
+                            id_reserva = sc.nextInt();
                             sc.nextLine();
                             FunReserva.registroCheckIn(id_reserva);
                         break;
                         case 3: // Realizar check_out
-                        
+                            if (!FunReserva.hayRegistros()) {
+                                System.out.println("No hay reservas registradas");
+                                break;
+                            }
+                            System.out.print("Ingresa el ID del huésped: ");
+                            int id_huesped_checkout = sc.nextInt();
+                            sc.nextLine(); 
+                            if (!FunHues.existehuesped(id_huesped_checkout)) {
+                                System.out.println("No se encontró el huésped");
+                                break;
+                            }
+                            System.out.print("Ingresa el ID de la reserva: ");
+                            id_reserva = sc.nextInt();
+                            sc.nextLine();
+                            FunReserva.registroCheckOut(id_reserva);
                         break;
-                        case 4: // Cacelar reserva
+                        case 4: // Cancelar reserva
                         
                         break;
                         case 5: //Listar reservas

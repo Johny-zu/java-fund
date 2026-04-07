@@ -267,4 +267,35 @@ public class FuncionReservas {
             }
         }
     }
+
+    public void registroCheckOut(int id_reserva) throws SQLException {
+        // Primero verificar el estado
+        String sqlVerificar = "SELECT estado FROM reservas WHERE id_reserva = ?";
+        try (Connection conn = ConexionBaseDatos.getConnection();
+            PreparedStatement pstmtVerificar = conn.prepareStatement(sqlVerificar)) {
+            pstmtVerificar.setInt(1, id_reserva);
+            ResultSet rs = pstmtVerificar.executeQuery();
+            if (!rs.next()) {
+                System.out.println("No se encontró ninguna reserva con ID: " + id_reserva);
+                return;
+            }
+            String estadoActual = rs.getString("estado");
+            if (estadoActual.equals("check_out")) {
+                System.out.println("La reserva ya ha realizado check-out anteriormente.");
+                return;
+            }
+            if (!estadoActual.equals("check_in")) {
+                System.out.println("La reserva no está en estado check-in. Estado actual: " + estadoActual);
+                return;
+            }
+        }
+        
+        String sqlUpdate = "UPDATE reservas SET estado = 'check_out' WHERE id_reserva = ?";
+        try (Connection conn = ConexionBaseDatos.getConnection();
+            PreparedStatement pstmtUpdate = conn.prepareStatement(sqlUpdate)) {
+            pstmtUpdate.setInt(1, id_reserva);
+            pstmtUpdate.executeUpdate();
+            System.out.println("Check-out realizado con éxito");
+        }
+    }
 }
