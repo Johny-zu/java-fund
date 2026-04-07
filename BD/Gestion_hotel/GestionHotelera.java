@@ -285,20 +285,25 @@ public class GestionHotelera {
                     System.out.printf(ModuloReservas);
                     m3 = sc.nextInt();
                     switch (m3) {
-                        case 1:
-                            break;
-                        case 2:
+                        case 1: // Crear nueva reserva
+                        
                         break;
-                        case 3:
-                            break;
-                        case 4:
-                            break;
-                        case 5:
-                            break;
-                        case 6:
-                            break;
+                        case 2: // Realizar check_in
+                        break;
+                        case 3: // Realizar check_out
+                        
+                        break;
+                        case 4: // Cacelar reserva
+                        
+                        break;
+                        case 5: //Listar reservas
+                        
+                        break;
+                        case 6: // Detalles de la reserva
+                        
+                        break;
                         case 7: System.out.println("Saliendo del modulo de reservas...");
-                            break;
+                        break;
                         default: System.out.println("opcion invalida");
                             break;
                     }

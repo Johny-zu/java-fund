@@ -14,6 +14,18 @@ import BD.Gestion_hotel.Modelo.Huesped;
 import BD.Gestion_hotel.Modelo.Reservas;
 
 public class FuncionReservas {
+    public boolean harRegistros() throws SQLException{
+        String sql = "SELECT COUNT(*) FROM reservas";
+        try(Connection conn = ConexionBaseDatos.getConnection();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql)){
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        return false;
+    }
+
     public List<Reservas> enlistarReservas() throws SQLException{
         List<Reservas> listadoReservas = new ArrayList<>();
         String sql = "SELECT * FROM reservas";
