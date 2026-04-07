@@ -7,6 +7,7 @@ import java.util.Scanner;
 import BD.Gestion_hotel.FuncionesHotel.FuncionHabitacion;
 import BD.Gestion_hotel.FuncionesHotel.FuncionHuespedes;
 import BD.Gestion_hotel.FuncionesHotel.FuncionPago;
+import BD.Gestion_hotel.FuncionesHotel.FuncionReporteServicio;
 import BD.Gestion_hotel.FuncionesHotel.FuncionReservas;
 import BD.Gestion_hotel.Modelo.Estado;
 import BD.Gestion_hotel.Modelo.EstadoHabitacion;
@@ -101,12 +102,15 @@ public class GestionHotelera {
         Metodo metodo_pago;
         String referencia;
 
+        // Reportes por servicio
+        LocalDate fecha_busqueda;
+
         // Funciones
         FuncionHabitacion FunHab = new FuncionHabitacion();                
         FuncionHuespedes FunHues = new FuncionHuespedes();
         FuncionReservas FunReserva = new FuncionReservas();
         FuncionPago FunPagos = new FuncionPago();
-
+        FuncionReporteServicio FunReportes = new FuncionReporteServicio();
 
         do {
             System.out.printf(menuPrincipal);
@@ -471,20 +475,28 @@ public class GestionHotelera {
                     System.out.printf(ModuloReportes);
                     m5 = sc.nextInt();
                     switch (m5) {
-                        case 1:
-                            break;
-                        case 2:
+                        case 1: // Ocupacion por fecha
+                            System.out.print("Ingrese la fecha de fin (YYYY-MM-DD): ");
+                            String fechaBusquedaStr = sc.nextLine();
+                            fecha_busqueda = LocalDate.parse(fechaBusquedaStr);
+                            System.out.println(FunReportes.obtenerOcupacionPorFecha(fecha_busqueda));
                         break;
-                        case 3:
-                            break;
-                        case 4:
-                            break;
-                        case 5:
-                            break;
+                        case 2: // Ingreso por periodo
+
+                        break;
+                        case 3: // habitaciones mas reservas
+
+                        break;
+                        case 4: // Huespedes frecuentes
+
+                        break;
+                        case 5: //Reservas activas hoy
+
+                        break;
                         case 6: System.out.println("Saliendo del modulo de reportes...");
-                            break;
+                        break;
                         default: System.out.println("opcion invalida");
-                            break;
+                        break;
                     }
                 } while (m5 != 6); 
                     break;

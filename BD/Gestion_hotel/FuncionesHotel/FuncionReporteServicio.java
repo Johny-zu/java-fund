@@ -19,7 +19,7 @@ import BD.Gestion_hotel.Modelo.Reservas;
 import BD.Gestion_hotel.Modelo.TipoHabitacion;
 
 public class FuncionReporteServicio {
-    public double obtenerOcupacionPorFecha(Date fecha) throws SQLException{
+    public double obtenerOcupacionPorFecha(LocalDate fecha) throws SQLException {
         double porcentaje = 0;
         String sqlTotal = "SELECT COUNT(*) as total FROM habitaciones";
         String sqlOcupadas = "SELECT COUNT(DISTINCT h.id_habitacion) as ocupadas " +
@@ -44,7 +44,7 @@ public class FuncionReporteServicio {
 
             int habitacionesOcupados = 0;
             try(PreparedStatement pstmt = conn.prepareStatement(sqlOcupadas)){
-                java.sql.Date sqlFecha = new java.sql.Date(fecha.getTime());
+                java.sql.Date sqlFecha = java.sql.Date.valueOf(fecha); 
                 pstmt.setDate(1, sqlFecha);
                 pstmt.setDate(2, sqlFecha);
                 try(ResultSet rs = pstmt.executeQuery()){
