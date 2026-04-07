@@ -59,13 +59,13 @@ public class FuncionReporteServicio {
         return porcentaje;
     }
 
-    public double obtenerIngresosPorPeriodo(Date inicio, Date fin) throws SQLException{
+    public double obtenerIngresosPorPeriodo(LocalDate inicio, LocalDate fin) throws SQLException {
         double totalIngresos = 0.0;
         String sql = "SELECT SUM(monto) as total FROM pagos WHERE fecha_pago BETWEEN ? AND ?";
         try(Connection conn = ConexionBaseDatos.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql)){
-                java.sql.Date sqlinicio = new java.sql.Date(inicio.getTime());
-                java.sql.Date sqlfin = new java.sql.Date(fin.getTime());
+                java.sql.Date sqlinicio = java.sql.Date.valueOf(inicio);
+                java.sql.Date sqlfin = java.sql.Date.valueOf(fin);
                 pstmt.setDate(1, sqlinicio);
                 pstmt.setDate(2, sqlfin);
 
@@ -77,7 +77,7 @@ public class FuncionReporteServicio {
         }
         return totalIngresos;
     }
-
+    
     public List<Habitacion> obtenerHabitacionesMasReservadas() throws SQLException {
         List<Habitacion> habitaciones = new ArrayList<>();
         String sql = "SELECT h.id_habitacion, h.numero, h.tipo, h.precio_noche, h.capacidad, h.estado, " +

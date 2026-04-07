@@ -482,7 +482,13 @@ public class GestionHotelera {
                             System.out.println(FunReportes.obtenerOcupacionPorFecha(fecha_busqueda));
                         break;
                         case 2: // Ingreso por periodo
-
+                            System.out.print("Ingrese la fecha de inicio (YYYY-MM-DD): ");
+                            String fechaIniciostr = sc.nextLine();
+                            fecha_inicio = LocalDate.parse(fechaIniciostr);
+                            System.out.print("Ingrese la fecha fin (YYYY-MM-DD): ");
+                            String fechaFinstr = sc.nextLine();
+                            fecha_fin = LocalDate.parse(fechaFinstr);
+                            System.out.println(FunReportes.obtenerIngresosPorPeriodo(fecha_inicio, fecha_fin));
                         break;
                         case 3: // habitaciones mas reservas
 
